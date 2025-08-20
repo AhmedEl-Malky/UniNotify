@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.secret.gradle.plugin)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -56,4 +60,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.kotlinx.serialization)
+    kapt(libs.hilt.compiler)
+    implementation(libs.bundles.hilt)
+    implementation(libs.bundles.ktor)
+    implementation(libs.compose.navigation)
+    implementation(libs.kotlinx.coroutines)
+
 }

@@ -17,7 +17,11 @@ private val LightColorScheme = lightColorScheme(
     onError = DestructiveForeground,
     outline = Border,
     outlineVariant = Ring,
-    scrim = Input
+    scrim = Input,
+    surfaceContainerHigh = Chart1,
+    surfaceContainerHighest = Chart2,
+    surfaceContainerLow = Chart3,
+    surfaceContainerLowest = Chart4,
 )
 
 @Composable

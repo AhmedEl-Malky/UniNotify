@@ -20,3 +20,8 @@ val DestructiveForeground = Color.White //OnError
 val Border = Color(0xFFEAEAEA) // Outline
 val Input = Color(0xFFEAEAEA) // Scrim
 val Ring = Color(0xFFB5B5B5) // OutlineVariant
+
+val Chart1 = Color(0xFF1E88E5) // SurfaceContainerHigh
+val Chart2 = Color(0xFFFB8C00) // SurfaceContainerHighest
+val Chart3 = Color(0xFF6750A4) // SurfaceContainerLow
+val Chart4 = Color(0xFFBA1A1A) // SurfaceContainerLowest

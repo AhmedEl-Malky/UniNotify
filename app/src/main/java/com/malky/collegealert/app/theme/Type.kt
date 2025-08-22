@@ -84,13 +84,13 @@ val Typography = Typography(
         fontFamily = RobotoFontFamily,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        fontWeight = FontWeight.W400
+        fontWeight = FontWeight.W500
     ),
     bodyMedium = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
-        fontWeight = FontWeight.W400
+        fontWeight = FontWeight.W500
     ),
     bodySmall = TextStyle(
         fontFamily = RobotoFontFamily,

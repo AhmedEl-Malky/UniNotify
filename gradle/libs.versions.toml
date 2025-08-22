@@ -16,6 +16,8 @@ hilt = "2.57"
 hiltNavigationCompose = "1.2.0"
 secretGradle = "2.0.1"
 googleFonts = "1.9.0"
+lucideIcons = "1.1.0"
+
 
 
 [libraries]
@@ -58,6 +60,10 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 
 # Google fonts
 google-fonts = {group = "androidx.compose.ui" , name = "ui-text-google-fonts" , version.ref = "googleFonts"}
+
+
+#Lucide Icons
+lucide-icons = { module = "com.composables:icons-lucide", version.ref = "lucideIcons" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

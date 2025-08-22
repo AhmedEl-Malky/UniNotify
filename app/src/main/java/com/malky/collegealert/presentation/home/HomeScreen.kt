@@ -18,12 +18,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.User
+import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 import com.malky.collegealert.presentation.composables.EventCard
 import com.malky.collegealert.presentation.composables.EventsCountSection
@@ -32,12 +37,12 @@ import com.malky.collegealert.presentation.composables.NavigationItemsRow
 
 @Composable
 fun HomeScreen(
-    state: HomeState,
-    onAction: (HomeAction) -> Unit
+    viewModel: HomeViewModel
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreenContent(
         state = state,
-        onAction = onAction
+        onAction = viewModel::onAction
     )
 }
 
@@ -45,6 +50,7 @@ fun HomeScreen(
 private fun HomeScreenContent(
     state: HomeState,
     onAction: (HomeAction) -> Unit,
+    navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -103,7 +109,7 @@ private fun HomeScreenContent(
 @Composable
 private fun PreviewHomeScreen() {
     CollegeAlertTheme {
-        HomeScreen(
+        HomeScreenContent(
             state = HomeState(),
             onAction = {}
         )

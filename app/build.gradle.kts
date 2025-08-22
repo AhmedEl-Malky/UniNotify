@@ -67,4 +67,5 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.google.fonts)
+    implementation(libs.lucide.icons)
 }

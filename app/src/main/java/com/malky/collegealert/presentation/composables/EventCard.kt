@@ -56,6 +56,7 @@ fun EventCard(
                     offset = DpOffset(x = 0.dp, y = 0.5.dp)
                 )
             ),
+        onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
         ),

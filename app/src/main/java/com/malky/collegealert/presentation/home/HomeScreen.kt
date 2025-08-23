@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -54,12 +55,13 @@ private fun HomeScreenContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background)
-
+                .consumeWindowInsets(WindowInsets.navigationBars)
         ) {
             item {
                 HeaderSection(
@@ -81,7 +83,9 @@ private fun HomeScreenContent(
                     }
                 )
             }
-            item { NavigationItemsRow() }
+            item {
+                NavigationItemsRow(navigationList = state.navigationList)
+            }
             item {
                 Text(
                     modifier = Modifier

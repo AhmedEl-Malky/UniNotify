@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.malky.collegealert.presentation.categories.CategoriesScreen
 import com.malky.collegealert.presentation.home.HomeScreen
 
 val LocalNavController = compositionLocalOf<NavHostController> {
@@ -18,9 +19,12 @@ val LocalNavController = compositionLocalOf<NavHostController> {
 fun NavigationGraph() {
     val navController = rememberNavController()
     CompositionLocalProvider(LocalNavController provides navController) {
-        NavHost(navController = navController, startDestination = Destination.Home){
+        NavHost(navController = navController, startDestination = Destination.Home) {
             composable<Destination.Home> {
                 HomeScreen(viewModel = hiltViewModel())
+            }
+            composable<Destination.Categories> {
+                CategoriesScreen(viewModel = hiltViewModel())
             }
         }
     }

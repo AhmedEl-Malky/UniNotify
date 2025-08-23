@@ -1,4 +1,4 @@
-package com.malky.collegealert.presentation.categories
+package com.malky.collegealert.presentation.savedEvents
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor() : ViewModel() {
-    private val _state = MutableStateFlow(CategoriesState())
+class SavedEventsViewModel @Inject constructor() : ViewModel() {
+    private val _state = MutableStateFlow(SavedEventsState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: CategoriesAction) {
+    fun onAction(action: SavedEventsAction) {
         when (action) {
             else -> {}
         }

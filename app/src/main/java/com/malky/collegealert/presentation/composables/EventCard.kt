@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -91,7 +92,9 @@ fun EventCard(
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600
-                    )
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = description,
@@ -99,7 +102,9 @@ fun EventCard(
                         color = MaterialTheme.colorScheme.onSurface.copy(
                             alpha = 0.75f
                         )
-                    )
+                    ),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier.height(2.dp))
                 Row(
@@ -134,7 +139,6 @@ fun EventCard(
 
         }
     }
-    Spacer(modifier = Modifier.height(24.dp))
 }
 
 

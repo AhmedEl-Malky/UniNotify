@@ -24,10 +24,10 @@ import com.malky.collegealert.app.theme.CollegeAlertTheme
 fun NavigationItemsRow(
     modifier: Modifier = Modifier,
     navigationList: Map<String, ImageVector>,
-    navController: NavHostController = LocalNavController.current
+    navController: NavHostController
 ) {
     Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 24.dp),
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -41,7 +41,9 @@ fun NavigationItemsRow(
                         "Categories" -> {
                             navController.navigate(Destination.Categories)
                         }
-                        "Saved" -> {}
+                        "Saved" -> {
+                            navController.navigate(Destination.SavedEvents)
+                        }
                         "Alerts" -> {}
                         "Profile" -> {}
                         else -> Unit
@@ -62,7 +64,8 @@ private fun PreviewNavigationItemRow() {
                 "Saved" to Lucide.Bookmark,
                 "Alerts" to Lucide.Bell,
                 "Profile" to Lucide.User
-            )
+            ),
+            navController = LocalNavController.current
         )
     }
 }

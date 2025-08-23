@@ -44,7 +44,6 @@ fun NavigationCard(
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),
         colors = CardDefaults.cardColors(
             containerColor = navigationCardTheme(label).copy(alpha = 0.25f),
             contentColor = navigationCardTheme(label),

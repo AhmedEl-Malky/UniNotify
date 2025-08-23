@@ -7,7 +7,7 @@ sealed interface Destination {
     data object Home : Destination
 
     @Serializable
-    data class EventDetails(val eventID : Int) : Destination
+    data object EventDetails : Destination
 
     @Serializable
     data object Categories : Destination

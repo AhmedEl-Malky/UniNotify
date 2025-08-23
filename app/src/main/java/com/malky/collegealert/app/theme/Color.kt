@@ -25,3 +25,4 @@ val Chart1 = Color(0xFF1E88E5) // SurfaceContainerHigh
 val Chart2 = Color(0xFFFB8C00) // SurfaceContainerHighest
 val Chart3 = Color(0xFFAD46FF) // SurfaceContainerLow
 val Chart4 = Color(0xFFe7000b) // SurfaceContainerLowest
+val Green = Color(0xFF00a63e)

@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.malky.collegealert.presentation.categories.CategoriesScreen
+import com.malky.collegealert.presentation.eventDetails.EventDetailsScreen
 import com.malky.collegealert.presentation.home.HomeScreen
 import com.malky.collegealert.presentation.savedEvents.SavedEventsScreen
 
@@ -29,6 +30,9 @@ fun NavigationGraph() {
             }
             composable<Destination.SavedEvents> {
                 SavedEventsScreen(viewModel = hiltViewModel())
+            }
+            composable<Destination.EventDetails> {
+                EventDetailsScreen(viewModel = hiltViewModel())
             }
         }
     }

@@ -33,9 +33,9 @@ import com.malky.collegealert.app.theme.CollegeAlertTheme
 fun HeaderSection(
     modifier: Modifier = Modifier,
     title: String,
-    subtitle: String,
+    subtitle: String?,
     navigationIcon: @Composable () -> Unit = {},
-    profileButton: @Composable () -> Unit = {},
+    actionButton: @Composable () -> Unit = {},
     extraContent: @Composable () -> Unit = {},
 ) {
     Column(
@@ -74,16 +74,18 @@ fun HeaderSection(
                     text = title,
                     style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
                 )
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary.copy(
-                            alpha = 0.75f
+                subtitle?.let{ text ->
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onPrimary.copy(
+                                alpha = 0.75f
+                            )
                         )
                     )
-                )
+                }
             }
-            profileButton()
+            actionButton()
         }
         extraContent()
     }
@@ -127,7 +129,7 @@ private fun PreviewHeaderSection() {
             },
             title = "Good Morning!",
             subtitle = "Stay updated with campus events",
-            profileButton = {
+            actionButton = {
                 IconButton(
                     onClick = {},
                 ) {

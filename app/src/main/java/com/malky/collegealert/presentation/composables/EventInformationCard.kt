@@ -1,14 +1,12 @@
 package com.malky.collegealert.presentation.composables
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,18 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.malky.collegealert.app.theme.CollegeAlertTheme
-import com.malky.collegealert.domain.EventType
 
 @Composable
-fun CategoryCard(
-    eventType: EventType,
-    eventsCount: Int,
-    onClick: () -> Unit,
+fun EventInformationCard(
+    title: String,
+    description: String,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .dropShadow(
                 shape = RoundedCornerShape(16.dp),
                 shadow = Shadow(
@@ -42,36 +39,25 @@ fun CategoryCard(
                     offset = DpOffset(x = 0.dp, y = 0.5.dp)
                 )
             ),
-        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.background
         ),
-        onClick = onClick
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 48.dp, horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(horizontal = 24.dp, vertical = 48.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                modifier = Modifier
-                    .size(64.dp)
-                    .background(eventType.eventTheme(), shape = RoundedCornerShape(16.dp))
-                    .padding(16.dp),
-                imageVector = eventType.icon(),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimary
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.W700)
             )
             Text(
-                modifier = Modifier
-                    .padding(top = 16.dp, bottom = 4.dp),
-                text = "${eventType}s",
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.W600)
-            )
-            Text(
-                text = "$eventsCount events",
-                style = MaterialTheme.typography.bodyMedium.copy(
+                text = description,
+                style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Normal,
                     color = MaterialTheme.colorScheme.onSurface.copy(
                         alpha = 0.75f
@@ -84,12 +70,11 @@ fun CategoryCard(
 
 @Preview
 @Composable
-private fun PreviewCategoryCard() {
+fun PreviewEventInformationCard() {
     CollegeAlertTheme {
-        CategoryCard(
-            eventType = EventType.Seminar,
-            eventsCount = 5,
-            onClick = {}
+        EventInformationCard(
+            title = "AI & Machine Learning Seminar",
+            description ="Learn about the latest trends in AI and ML from industry experts."
         )
     }
 }

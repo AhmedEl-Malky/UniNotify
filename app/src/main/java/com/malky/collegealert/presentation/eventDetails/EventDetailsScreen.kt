@@ -2,20 +2,19 @@ package com.malky.collegealert.presentation.eventDetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -63,20 +62,16 @@ private fun EventDetailsScreenContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        contentWindowInsets = WindowInsets.statusBars,
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
-//                .fillMaxSize()
+                .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background)
-                .consumeWindowInsets(WindowInsets.navigationBars)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.SpaceBetween
+                .consumeWindowInsets(WindowInsets.navigationBars),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 4.dp)
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
+            item {
                 HeaderSection(
                     modifier = Modifier.padding(bottom = 8.dp),
                     title = "Event Details",
@@ -85,7 +80,7 @@ private fun EventDetailsScreenContent(
                         IconButton(
                             modifier = Modifier.padding(end = 4.dp),
                             onClick = {
-                            navController.navigateUp()
+                                navController.navigateUp()
                             }
                         ) {
                             Icon(
@@ -107,20 +102,24 @@ private fun EventDetailsScreenContent(
                         )
                     }
                 )
+            }
+            item {
                 EventInformationCard(
                     title = state.event.title,
                     description = state.event.description
                 )
+            }
+            item {
                 EventDetailsCard(
                     date = state.event.date,
                     time = state.event.time,
                     venue = state.event.location
                 )
             }
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+            item {
                 PrimaryButton(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -148,6 +147,8 @@ private fun EventDetailsScreenContent(
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
+            }
+            item {
                 SecondaryButton(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -2,13 +2,13 @@ package com.malky.collegealert.presentation.savedEvents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -24,11 +24,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.User
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 import com.malky.collegealert.presentation.composables.EventCard
-import com.malky.collegealert.presentation.composables.EventsCountSection
 import com.malky.collegealert.presentation.composables.HeaderSection
 
 @Composable
@@ -51,7 +49,6 @@ private fun SavedEventsScreenContent(
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -59,10 +56,11 @@ private fun SavedEventsScreenContent(
                 .background(color = MaterialTheme.colorScheme.background)
                 .consumeWindowInsets(WindowInsets.navigationBars),
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 4.dp)
         ) {
             item {
                 HeaderSection(
-                    modifier = Modifier.padding(bottom = 12.dp),
+                    modifier = Modifier.padding(bottom = 8.dp),
                     title = "Saved Events",
                     subtitle = "${state.savedEvents.size} saved events",
                     navigationIcon = {

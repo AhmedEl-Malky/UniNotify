@@ -14,7 +14,7 @@ val Foreground = Color(0xFF000000) //OnBackground
 val Sidebar = Color(0xFFFAFAFA) //Surface
 val SidebarForeground = Color(0xFF252525) //OnSurface
 
-val Destructive = Color(0xFFB3261E) //Error
+val Destructive = Color(0xFFE7000B) //Error
 val DestructiveForeground = Color.White //OnError
 
 val Border = Color(0xFFEAEAEA) // Outline

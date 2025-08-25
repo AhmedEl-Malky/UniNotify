@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.Bell
-import com.composables.icons.lucide.Book
 import com.composables.icons.lucide.BookOpen
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
@@ -45,7 +44,9 @@ fun NavigationItemsRow(
                             navController.navigate(Destination.SavedEvents)
                         }
                         "Alerts" -> {}
-                        "Profile" -> {}
+                        "Profile" -> {
+                            navController.navigate(Destination.Profile)
+                        }
                         else -> Unit
                     }
                 }

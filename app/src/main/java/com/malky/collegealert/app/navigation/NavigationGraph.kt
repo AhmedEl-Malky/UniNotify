@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.malky.collegealert.presentation.categories.CategoriesScreen
 import com.malky.collegealert.presentation.eventDetails.EventDetailsScreen
 import com.malky.collegealert.presentation.home.HomeScreen
+import com.malky.collegealert.presentation.profile.ProfileScreen
 import com.malky.collegealert.presentation.savedEvents.SavedEventsScreen
 
 val LocalNavController = compositionLocalOf<NavHostController> {
@@ -33,6 +34,9 @@ fun NavigationGraph() {
             }
             composable<Destination.EventDetails> {
                 EventDetailsScreen(viewModel = hiltViewModel())
+            }
+            composable<Destination.Profile> {
+                ProfileScreen(viewModel = hiltViewModel())
             }
         }
     }

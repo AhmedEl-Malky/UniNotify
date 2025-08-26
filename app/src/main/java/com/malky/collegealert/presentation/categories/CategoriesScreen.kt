@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
+import com.malky.collegealert.app.navigation.Destination
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 import com.malky.collegealert.presentation.composables.CategoryCard
@@ -86,7 +87,9 @@ private fun CategoriesScreenContent(
                 CategoryCard(
                     eventType = category.first,
                     eventsCount = category.second,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(Destination.CategorizedEvents(eventType = category.first))
+                    }
                 )
             }
         }

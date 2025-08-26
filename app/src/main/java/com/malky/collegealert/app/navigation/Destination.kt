@@ -1,5 +1,6 @@
 package com.malky.collegealert.app.navigation
 
+import com.malky.collegealert.domain.EventType
 import kotlinx.serialization.Serializable
 
 sealed interface Destination {
@@ -17,5 +18,8 @@ sealed interface Destination {
 
     @Serializable
     data object SavedEvents : Destination
+
+    @Serializable
+    data class CategorizedEvents(val eventType: EventType)
 
 }

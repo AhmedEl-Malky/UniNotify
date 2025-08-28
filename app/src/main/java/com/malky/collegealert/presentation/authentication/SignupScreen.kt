@@ -17,24 +17,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 import com.malky.collegealert.presentation.composables.AppLogo
 import com.malky.collegealert.presentation.composables.AuthenticationHeaderSection
-import com.malky.collegealert.presentation.composables.LoginFormSection
+import com.malky.collegealert.presentation.composables.SignupFormSection
 
 @Composable
-fun LoginScreen(
+fun SignupScreen(
     viewModel: AuthenticationViewModel
 ) {
-    LoginScreenContent()
+    SignupScreenContent()
 }
 
 @Composable
-private fun LoginScreenContent(
-    navController: NavHostController = LocalNavController.current
-) {
+private fun SignupScreenContent() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -60,19 +56,16 @@ private fun LoginScreenContent(
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AuthenticationHeaderSection(title = "Login")
-            LoginFormSection(
-                modifier = Modifier.fillMaxWidth(),
-                navController = navController
-            )
+            AuthenticationHeaderSection(title = "Signup")
+            SignupFormSection()
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-private fun PreviewLoginScreen() {
+private fun PreviewSignupScreen() {
     CollegeAlertTheme {
-        LoginScreenContent()
+        SignupScreenContent()
     }
 }

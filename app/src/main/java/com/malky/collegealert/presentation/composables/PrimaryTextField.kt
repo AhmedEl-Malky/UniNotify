@@ -42,13 +42,13 @@ fun PrimaryTextField(
     shape: Shape = RoundedCornerShape(16.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
         focusedContainerColor = Color.Transparent,
-        unfocusedContainerColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+        unfocusedContainerColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.2f),
         focusedBorderColor = MaterialTheme.colorScheme.primary,
         unfocusedBorderColor = Color.Transparent,
         cursorColor = MaterialTheme.colorScheme.primary,
         focusedTextColor = MaterialTheme.colorScheme.onBackground,
-        unfocusedTextColor = Color.Gray,
-        errorTextColor = Color.Gray,
+        unfocusedTextColor = MaterialTheme.colorScheme.outlineVariant,
+        errorTextColor = MaterialTheme.colorScheme.error,
         errorSupportingTextColor = MaterialTheme.colorScheme.error,
         errorBorderColor = MaterialTheme.colorScheme.error,
     )
@@ -78,7 +78,7 @@ fun PrimaryTextField(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPrimaryTextField() {
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf("sfgsgsgs") }
     CollegeAlertTheme {
         PrimaryTextField(
             value = text,

@@ -13,13 +13,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -44,7 +47,8 @@ fun LoginFormSection(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    val focusRequester = remember { FocusRequester() }
+    val focusRequester = LocalFocusManager.current
+    var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,7 +80,9 @@ fun LoginFormSection(
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onNext = { focusRequester.requestFocus(focusDirection = FocusDirection.Down) }
+                    onNext = {
+                        focusRequester.moveFocus(FocusDirection.Down)
+                    }
                 )
             )
         }
@@ -89,7 +95,7 @@ fun LoginFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "fafaf",
+                value = "",
                 onValueChange = {},
                 placeholder = {
                     Text(
@@ -108,13 +114,15 @@ fun LoginFormSection(
                 keyboardActions = KeyboardActions(
                     onDone = { }
                 ),
-                visualTransformation = if (true) PasswordVisualTransformation(mask = '•') else VisualTransformation.None,
+                visualTransformation = if (!isPasswordVisible) PasswordVisualTransformation(mask = '•') else VisualTransformation.None,
                 trailingIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {
+                            isPasswordVisible = !isPasswordVisible
+                        }
                     ) {
                         Icon(
-                            imageVector = if (false) Lucide.EyeOff else Lucide.Eye,
+                            imageVector = if (isPasswordVisible) Lucide.EyeOff else Lucide.Eye,
                             contentDescription = "Show/Hide Password",
                             tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                         )
@@ -126,18 +134,21 @@ fun LoginFormSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp),
-            onClick = { navController.navigate(Destination.MainGraph) },
-
-            ) {
+            onClick = {
+                navController.navigate(Destination.MainGraph)
+            },
+        ) {
             Text(
                 text = "Login",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleLarge
             )
         }
         Text(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
-                .clickable { navController.navigate(Destination.MainGraph) }
+                .clickable {
+                    navController.navigate(Destination.Signup)
+                }
                 .padding(4.dp),
             text = buildAnnotatedString {
                 withStyle(

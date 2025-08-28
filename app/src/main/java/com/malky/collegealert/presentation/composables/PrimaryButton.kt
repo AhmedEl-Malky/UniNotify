@@ -1,5 +1,6 @@
 package com.malky.collegealert.presentation.composables
 
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
@@ -15,8 +16,8 @@ fun PrimaryButton(
     content: @Composable () -> Unit
 ) {
     Button(
-        onClick = {},
-        modifier = modifier,
+        onClick = onClick,
+        modifier = modifier.heightIn(min = 48.dp),
         shape = RoundedCornerShape(16.dp),
     ) {
         content()

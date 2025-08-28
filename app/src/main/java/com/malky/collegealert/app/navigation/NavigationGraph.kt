@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.malky.collegealert.presentation.authentication.LoginScreen
+import com.malky.collegealert.presentation.authentication.SignupScreen
 import com.malky.collegealert.presentation.categories.CategoriesScreen
 import com.malky.collegealert.presentation.categorizedEvents.CategorizedEventsScreen
 import com.malky.collegealert.presentation.eventDetails.EventDetailsScreen
@@ -30,6 +31,9 @@ fun NavigationGraph() {
                 navigation<Destination.AuthenticationGraph>(startDestination = Destination.Login) {
                     composable<Destination.Login> {
                         LoginScreen(viewModel = hiltViewModel())
+                    }
+                    composable<Destination.Signup> {
+                        SignupScreen(viewModel = hiltViewModel())
                     }
                 }
                 navigation<Destination.MainGraph>(startDestination = Destination.Home) {

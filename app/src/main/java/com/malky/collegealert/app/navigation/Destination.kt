@@ -4,18 +4,23 @@ import com.malky.collegealert.domain.EventType
 import kotlinx.serialization.Serializable
 
 sealed interface Destination {
+    @Serializable
+    data object AppGraph : Destination
+
+    @Serializable
+    data object Splash : Destination
 
     @Serializable
     data object AuthenticationGraph : Destination
 
     @Serializable
-    data object AppGraph : Destination
+    data object Login : Destination
+
+    @Serializable
+    data object Signup : Destination
 
     @Serializable
     data object MainGraph : Destination
-
-    @Serializable
-    data object Splash : Destination
 
     @Serializable
     data object Home : Destination
@@ -35,11 +40,7 @@ sealed interface Destination {
     @Serializable
     data class CategorizedEvents(val eventType: EventType) : Destination
 
-    @Serializable
-    data object Login : Destination
 
-    @Serializable
-    data object Register : Destination
 
 
 }

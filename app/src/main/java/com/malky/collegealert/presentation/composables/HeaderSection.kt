@@ -1,5 +1,6 @@
 package com.malky.collegealert.presentation.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,11 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,13 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.User
+import com.malky.collegealert.R
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 
 @Composable
@@ -35,7 +38,6 @@ fun HeaderSection(
     title: String,
     subtitle: String?,
     navigationIcon: @Composable () -> Unit = {},
-    actionButton: @Composable () -> Unit = {},
     extraContent: @Composable () -> Unit = {},
 ) {
     Column(
@@ -74,7 +76,7 @@ fun HeaderSection(
                     text = title,
                     style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
                 )
-                subtitle?.let{ text ->
+                subtitle?.let { text ->
                     Text(
                         text = text,
                         style = MaterialTheme.typography.titleMedium.copy(
@@ -85,7 +87,17 @@ fun HeaderSection(
                     )
                 }
             }
-            actionButton()
+            Image(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        shape = CircleShape
+                    )
+                    .padding(8.dp),
+                painter = painterResource(R.drawable.blue_logo),
+                contentDescription = "Logo",
+            )
         }
         extraContent()
     }
@@ -129,17 +141,6 @@ private fun PreviewHeaderSection() {
             },
             title = "Good Morning!",
             subtitle = "Stay updated with campus events",
-            actionButton = {
-                IconButton(
-                    onClick = {},
-                ) {
-                    Icon(
-                        imageVector = Lucide.User,
-                        contentDescription = "Go to Profile",
-                        tint = MaterialTheme.colorScheme.onPrimary,
-                    )
-                }
-            }
         )
     }
 }

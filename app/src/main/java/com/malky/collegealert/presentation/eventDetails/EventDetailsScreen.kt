@@ -92,15 +92,6 @@ private fun EventDetailsScreenContent(
                             )
                         }
                     },
-                    actionButton = {
-                        Icon(
-                            modifier = Modifier
-                                .size(20.dp),
-                            imageVector = Lucide.Bookmark,
-                            contentDescription = "this event is not saved till now",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
                 )
             }
             item {

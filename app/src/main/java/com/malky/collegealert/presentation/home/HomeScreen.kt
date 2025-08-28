@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,8 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.User
 import com.malky.collegealert.app.navigation.Destination
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
@@ -62,17 +58,6 @@ private fun HomeScreenContent(
                 HeaderSection(
                     title = "Welcome",
                     subtitle = "Stay updated with campus events",
-                    actionButton = {
-                        IconButton(
-                            onClick = {},
-                        ) {
-                            Icon(
-                                imageVector = Lucide.User,
-                                contentDescription = "Go to Profile",
-                                tint = MaterialTheme.colorScheme.onPrimary,
-                            )
-                        }
-                    },
                     extraContent = {
                         EventsCountSection(upcomingEventsCount = 4, savedEventsCount = 0)
                     }

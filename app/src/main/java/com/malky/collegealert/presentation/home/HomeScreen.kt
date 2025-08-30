@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.window.core.layout.WindowSizeClass
 import com.malky.collegealert.app.navigation.Destination
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
@@ -29,6 +30,7 @@ import com.malky.collegealert.presentation.composables.NavigationItemsRow
 
 @Composable
 fun HomeScreen(
+    windowSize: WindowSizeClass,
     viewModel: HomeViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()

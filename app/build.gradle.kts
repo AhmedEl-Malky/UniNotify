@@ -68,4 +68,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.google.fonts)
     implementation(libs.lucide.icons)
+    implementation(libs.material3.adaptive)
 }

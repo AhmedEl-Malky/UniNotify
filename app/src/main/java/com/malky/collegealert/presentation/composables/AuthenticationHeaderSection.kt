@@ -3,7 +3,6 @@ package com.malky.collegealert.presentation.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +21,6 @@ fun AuthenticationHeaderSection(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = horizontalAlignment

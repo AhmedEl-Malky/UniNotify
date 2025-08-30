@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.window.core.layout.WindowSizeClass
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.malky.collegealert.app.navigation.LocalNavController
@@ -29,6 +30,7 @@ import com.malky.collegealert.presentation.composables.HeaderSection
 
 @Composable
 fun CategorizedEventsScreen(
+    windowSize: WindowSizeClass,
     viewModel: CategorizedEventsViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()

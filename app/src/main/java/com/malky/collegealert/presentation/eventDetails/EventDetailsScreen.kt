@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.window.core.layout.WindowSizeClass
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
@@ -45,6 +46,7 @@ import com.malky.collegealert.presentation.composables.SecondaryButton
 
 @Composable
 fun EventDetailsScreen(
+    windowSize: WindowSizeClass,
     viewModel: EventDetailsViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()

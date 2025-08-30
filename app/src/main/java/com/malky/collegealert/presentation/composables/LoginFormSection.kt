@@ -39,7 +39,6 @@ import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.EyeOff
 import com.composables.icons.lucide.Lucide
 import com.malky.collegealert.app.navigation.Destination
-import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 
 @Composable
@@ -176,6 +175,6 @@ fun LoginFormSection(
 @Composable
 private fun PreviewLoginFormSection() {
     CollegeAlertTheme {
-        LoginFormSection(navController = LocalNavController.current)
+//        LoginFormSection()
     }
 }

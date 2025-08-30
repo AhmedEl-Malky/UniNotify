@@ -85,8 +85,7 @@ private fun LoginScreenContent(
                     }
                 }
 
-                DeviceConfiguration.MOBILE_LANDSCAPE,
-                DeviceConfiguration.TABLET_LANDSCAPE -> {
+                DeviceConfiguration.MOBILE_LANDSCAPE -> {
                     Row(
                         modifier = modifier
                             .windowInsetsPadding(WindowInsets.displayCutout)
@@ -106,12 +105,14 @@ private fun LoginScreenContent(
                 }
 
                 DeviceConfiguration.FOLDABLE,
+                DeviceConfiguration.TABLET_LANDSCAPE,
                 DeviceConfiguration.TABLET_PORTRAIT,
                 DeviceConfiguration.LARGE_TABLET,
                 DeviceConfiguration.DESKTOP -> {
                     Column(
                         modifier = modifier
                             .weight(1f)
+                            .padding(vertical = 12.dp)
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -127,8 +128,6 @@ private fun LoginScreenContent(
                         )
                     }
                 }
-
-
             }
         }
     }

@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.window.core.layout.WindowSizeClass
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
 import com.malky.collegealert.presentation.DeviceConfiguration
@@ -33,11 +32,11 @@ import com.malky.collegealert.presentation.composables.LoginFormSection
 
 @Composable
 fun LoginScreen(
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
     viewModel: AuthenticationViewModel
 ) {
     LoginScreenContent(
-        windowSize = windowSize
+        deviceConfiguration = deviceConfiguration
     )
 }
 
@@ -49,7 +48,7 @@ private fun LoginScreenContent(
             shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
         )
         .padding(horizontal = 16.dp, vertical = 24.dp),
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
@@ -70,7 +69,7 @@ private fun LoginScreenContent(
                     .padding(vertical = 8.dp)
                     .fillMaxWidth()
             )
-            when (DeviceConfiguration.rememberDeviceConfiguration(windowSize)) {
+            when (deviceConfiguration) {
                 DeviceConfiguration.MOBILE_PORTRAIT -> {
                     Column(
                         modifier = modifier

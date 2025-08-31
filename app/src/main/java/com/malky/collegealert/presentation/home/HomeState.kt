@@ -1,11 +1,5 @@
 package com.malky.collegealert.presentation.home
 
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.composables.icons.lucide.Bell
-import com.composables.icons.lucide.BookOpen
-import com.composables.icons.lucide.Bookmark
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.User
 import com.malky.collegealert.domain.Event
 import com.malky.collegealert.domain.EventType
 
@@ -22,7 +16,7 @@ data class HomeState(
         ),
         Event(
             title = "Mid-term Examinations",
-            description = "Mid-term exams for all undergraduate courses.",
+            description = "Mid-term exams for all undergraduate courses, Be ready for exams :)",
             type = EventType.Exam,
             date = "1/15/2024",
             time = "10:00 AM",
@@ -44,11 +38,5 @@ data class HomeState(
             time = "10:00 AM",
             location = "Online"
         )
-    ),
-    val navigationList:Map<String, ImageVector> = mapOf(
-        "Categories" to Lucide.BookOpen,
-        "Saved" to Lucide.Bookmark,
-        "Alerts" to Lucide.Bell,
-        "Profile" to Lucide.User
     )
 )

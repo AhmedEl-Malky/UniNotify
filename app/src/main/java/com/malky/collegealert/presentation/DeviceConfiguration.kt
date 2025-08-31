@@ -19,7 +19,9 @@ enum class DeviceConfiguration {
             val screenHeight = windowSize.windowHeightSizeClass
             return when {
                 screenWidth == WindowWidthSizeClass.COMPACT && screenHeight == WindowHeightSizeClass.MEDIUM -> MOBILE_PORTRAIT
+                screenWidth == WindowWidthSizeClass.COMPACT && screenHeight == WindowHeightSizeClass.EXPANDED -> MOBILE_PORTRAIT
                 screenWidth == WindowWidthSizeClass.MEDIUM && screenHeight == WindowHeightSizeClass.COMPACT -> MOBILE_LANDSCAPE
+                screenWidth == WindowWidthSizeClass.EXPANDED && screenHeight == WindowHeightSizeClass.COMPACT -> MOBILE_LANDSCAPE
 
                 screenWidth == WindowWidthSizeClass.MEDIUM && screenHeight == WindowHeightSizeClass.EXPANDED -> TABLET_PORTRAIT
                 screenWidth == WindowWidthSizeClass.EXPANDED && screenHeight == WindowHeightSizeClass.MEDIUM -> TABLET_LANDSCAPE

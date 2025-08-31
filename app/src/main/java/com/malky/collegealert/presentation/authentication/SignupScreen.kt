@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,23 +18,23 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 import com.malky.collegealert.app.theme.CollegeAlertTheme
+import com.malky.collegealert.presentation.DeviceConfiguration
 import com.malky.collegealert.presentation.composables.AppLogo
 import com.malky.collegealert.presentation.composables.AuthenticationHeaderSection
 import com.malky.collegealert.presentation.composables.SignupFormSection
 
 @Composable
 fun SignupScreen(
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
     viewModel: AuthenticationViewModel
 ) {
     SignupScreenContent(
-        windowSize = windowSize
+        deviceConfiguration = deviceConfiguration
     )
 }
 
@@ -45,7 +46,7 @@ private fun SignupScreenContent(
             shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
         )
         .padding(horizontal = 16.dp, vertical = 24.dp),
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
 ) {
     Scaffold(
         modifier = Modifier
@@ -65,20 +66,19 @@ private fun SignupScreenContent(
                     .padding(vertical = 8.dp)
                     .fillMaxWidth()
             )
-            when (windowSize.windowWidthSizeClass) {
-                WindowWidthSizeClass.COMPACT -> {
+            when (deviceConfiguration) {
+                DeviceConfiguration.MOBILE_PORTRAIT -> {
                     Column(
                         modifier = modifier
                             .weight(1f),
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                     ) {
                         AuthenticationHeaderSection(title = "Signup")
-                        SignupFormSection()
+                        SignupFormSection(modifier = Modifier.fillMaxWidth())
                     }
                 }
 
-                WindowWidthSizeClass.MEDIUM,
-                WindowWidthSizeClass.EXPANDED -> {
+                DeviceConfiguration.MOBILE_LANDSCAPE -> {
                     Row(
                         modifier = modifier
                             .windowInsetsPadding(WindowInsets.displayCutout)
@@ -93,7 +93,30 @@ private fun SignupScreenContent(
                         SignupFormSection(modifier = Modifier.weight(1f))
                     }
                 }
+
+                DeviceConfiguration.FOLDABLE,
+                DeviceConfiguration.TABLET_LANDSCAPE,
+                DeviceConfiguration.TABLET_PORTRAIT,
+                DeviceConfiguration.LARGE_TABLET,
+                DeviceConfiguration.DESKTOP -> {
+                    Column(
+                        modifier = modifier
+                            .weight(1f)
+                            .padding(vertical = 12.dp)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AuthenticationHeaderSection(
+                            modifier = Modifier.widthIn(max = 540.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            title = "Signup"
+                        )
+                        SignupFormSection(modifier = Modifier.widthIn(max = 540.dp))
+                    }
+                }
             }
+
         }
     }
 }

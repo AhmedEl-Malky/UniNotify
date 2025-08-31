@@ -31,13 +31,13 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.window.core.layout.WindowSizeClass
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Plus
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
+import com.malky.collegealert.presentation.DeviceConfiguration
 import com.malky.collegealert.presentation.composables.EventDetailsCard
 import com.malky.collegealert.presentation.composables.EventInformationCard
 import com.malky.collegealert.presentation.composables.HeaderSection
@@ -46,7 +46,7 @@ import com.malky.collegealert.presentation.composables.SecondaryButton
 
 @Composable
 fun EventDetailsScreen(
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
     viewModel: EventDetailsViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()

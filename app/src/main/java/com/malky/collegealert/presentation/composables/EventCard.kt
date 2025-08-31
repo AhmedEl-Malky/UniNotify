@@ -46,7 +46,6 @@ fun EventCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .dropShadow(
                 shape = RoundedCornerShape(16.dp),
                 shadow = Shadow(

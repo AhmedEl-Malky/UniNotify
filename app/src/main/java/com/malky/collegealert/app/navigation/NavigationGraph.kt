@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import androidx.window.core.layout.WindowSizeClass
+import com.malky.collegealert.presentation.DeviceConfiguration
 import com.malky.collegealert.presentation.authentication.LoginScreen
 import com.malky.collegealert.presentation.authentication.SignupScreen
 import com.malky.collegealert.presentation.categories.CategoriesScreen
@@ -25,7 +25,7 @@ val LocalNavController = compositionLocalOf<NavHostController> {
 
 @Composable
 fun NavigationGraph(
-    windowSize: WindowSizeClass
+    deviceConfiguration: DeviceConfiguration
 ) {
     val navController = rememberNavController()
     CompositionLocalProvider(LocalNavController provides navController) {
@@ -34,13 +34,13 @@ fun NavigationGraph(
                 navigation<Destination.AuthenticationGraph>(startDestination = Destination.Login) {
                     composable<Destination.Login> {
                         LoginScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.Signup> {
                         SignupScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
@@ -48,37 +48,37 @@ fun NavigationGraph(
                 navigation<Destination.MainGraph>(startDestination = Destination.Home) {
                     composable<Destination.Home> {
                         HomeScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.Categories> {
                         CategoriesScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.SavedEvents> {
                         SavedEventsScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.EventDetails> {
                         EventDetailsScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.Profile> {
                         ProfileScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }
                     composable<Destination.CategorizedEvents> {
                         CategorizedEventsScreen(
-                            windowSize = windowSize,
+                            deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel()
                         )
                     }

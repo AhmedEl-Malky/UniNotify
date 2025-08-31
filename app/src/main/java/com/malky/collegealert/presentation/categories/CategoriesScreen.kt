@@ -19,24 +19,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.window.core.layout.WindowSizeClass
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.malky.collegealert.app.navigation.Destination
 import com.malky.collegealert.app.navigation.LocalNavController
 import com.malky.collegealert.app.theme.CollegeAlertTheme
+import com.malky.collegealert.presentation.DeviceConfiguration
 import com.malky.collegealert.presentation.composables.CategoryCard
 import com.malky.collegealert.presentation.composables.HeaderSection
 
 @Composable
 fun CategoriesScreen(
-    windowSize: WindowSizeClass,
+    deviceConfiguration: DeviceConfiguration,
     viewModel: CategoriesViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     CategoriesScreenContent(
         state = state,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        deviceConfiguration = deviceConfiguration
     )
 }
 
@@ -44,6 +45,7 @@ fun CategoriesScreen(
 private fun CategoriesScreenContent(
     state: CategoriesState,
     onAction: (CategoriesAction) -> Unit,
+    deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
@@ -104,7 +106,8 @@ private fun PreviewCategoriesScreen() {
     CollegeAlertTheme {
         CategoriesScreenContent(
             state = CategoriesState(),
-            onAction = {}
+            onAction = {},
+            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
         )
     }
 }

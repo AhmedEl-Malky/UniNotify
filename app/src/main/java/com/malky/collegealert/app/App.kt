@@ -3,11 +3,13 @@ package com.malky.collegealert.app
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import com.malky.collegealert.app.navigation.NavigationGraph
+import com.malky.collegealert.presentation.DeviceConfiguration
 
 @Composable
 fun App() {
-    val windowSize = currentWindowAdaptiveInfo().windowSizeClass
+    val deviceConfiguration =
+        DeviceConfiguration.rememberDeviceConfiguration(currentWindowAdaptiveInfo().windowSizeClass)
     NavigationGraph(
-        windowSize = windowSize
+        deviceConfiguration = deviceConfiguration
     )
 }

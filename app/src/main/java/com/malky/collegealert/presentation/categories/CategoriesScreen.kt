@@ -1,8 +1,11 @@
 package com.malky.collegealert.presentation.categories
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +41,6 @@ fun CategoriesScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     CategoriesScreenContent(
         state = state,
-        onAction = viewModel::onAction,
         deviceConfiguration = deviceConfiguration
     )
 }
@@ -44,10 +48,21 @@ fun CategoriesScreen(
 @Composable
 private fun CategoriesScreenContent(
     state: CategoriesState,
-    onAction: (CategoriesAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
+    val widthFraction = remember {
+        when (deviceConfiguration) {
+            DeviceConfiguration.MOBILE_PORTRAIT,
+            DeviceConfiguration.TABLET_PORTRAIT -> 1f
+
+            DeviceConfiguration.MOBILE_LANDSCAPE,
+            DeviceConfiguration.FOLDABLE,
+            DeviceConfiguration.TABLET_LANDSCAPE,
+            DeviceConfiguration.LARGE_TABLET,
+            DeviceConfiguration.DESKTOP -> 0.7f
+        }
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -60,7 +75,7 @@ private fun CategoriesScreenContent(
                         onClick = {
                             navController.navigateUp()
                         }
-                    ){
+                    ) {
                         Icon(
                             modifier = Modifier
                                 .size(20.dp),
@@ -72,42 +87,47 @@ private fun CategoriesScreenContent(
                 }
             )
         }
-    ){ innerPadding ->
-        LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(top = 24.dp),
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(
-                start = 24.dp,
-                end = 24.dp,
-                bottom = innerPadding.calculateBottomPadding() + 4.dp
-            )
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            items(items = state.categories){ category ->
-                CategoryCard(
-                    eventType = category.first,
-                    eventsCount = category.second,
-                    onClick = {
-                        navController.navigate(Destination.CategorizedEvents(eventType = category.first))
-                    }
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth(widthFraction)
+                    .fillMaxHeight()
+                    .padding(innerPadding)
+                    .padding(top = 24.dp)
+                    .align(Alignment.CenterHorizontally),
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(
+                    start = 24.dp,
+                    end = 24.dp,
+                    bottom = innerPadding.calculateBottomPadding() + 4.dp
                 )
+            ) {
+                items(items = state.categories) { category ->
+                    CategoryCard(
+                        eventType = category.first,
+                        eventsCount = category.second,
+                        onClick = {
+                            navController.navigate(Destination.CategorizedEvents(eventType = category.first))
+                        }
+                    )
+                }
             }
         }
     }
 }
 
-@Preview
+@Preview(device = "spec:parent=pixel_tablet,orientation=landscape")
 @Composable
 private fun PreviewCategoriesScreen() {
     CollegeAlertTheme {
         CategoriesScreenContent(
             state = CategoriesState(),
-            onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
+            deviceConfiguration = DeviceConfiguration.TABLET_LANDSCAPE
         )
     }
 }

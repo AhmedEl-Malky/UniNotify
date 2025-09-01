@@ -10,7 +10,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
@@ -30,7 +29,6 @@ fun EventInformationCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .dropShadow(
                 shape = RoundedCornerShape(16.dp),
                 shadow = Shadow(
@@ -49,7 +47,6 @@ fun EventInformationCard(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 48.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = title,

@@ -5,11 +5,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,78 +38,136 @@ import com.malky.collegealert.presentation.composables.HeaderSection
 
 @Composable
 fun SavedEventsScreen(
-    deviceConfiguration: DeviceConfiguration,
-    viewModel: SavedEventsViewModel
+    viewModel: SavedEventsViewModel,
+    deviceConfiguration: DeviceConfiguration
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     SavedEventsScreenContent(
         state = state,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        deviceConfiguration = deviceConfiguration
     )
 }
 
 @Composable
 private fun SavedEventsScreenContent(
+    modifier: Modifier = Modifier
+        .fillMaxSize()
+        .background(color = MaterialTheme.colorScheme.background)
+        .consumeWindowInsets(WindowInsets.navigationBars),
     state: SavedEventsState,
     onAction: (SavedEventsAction) -> Unit,
+    deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background)
-                .consumeWindowInsets(WindowInsets.navigationBars),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 4.dp)
-        ) {
-            item {
-                HeaderSection(
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    title = "Saved Events",
-                    subtitle = "${state.savedEvents.size} saved events",
-                    navigationIcon = {
-                        IconButton(
-                            modifier = Modifier.padding(end = 4.dp),
-                            onClick = {
-                                navController.navigateUp()
-                            }
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(20.dp),
-                                imageVector = Lucide.ArrowLeft,
-                                contentDescription = "Navigate Back",
-                                tint = MaterialTheme.colorScheme.onPrimary
-                            )
-                        }
-                    },
-                )
+        when (deviceConfiguration) {
+            DeviceConfiguration.MOBILE_PORTRAIT -> {
+                LazyColumn(
+                    modifier = modifier,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 4.dp)
+                ) {
+                    item {
+                        HeaderSection(
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            title = "Saved Events",
+                            subtitle = "${state.savedEvents.size} saved events",
+                            navigationIcon = {
+                                IconButton(
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    onClick = {
+                                        navController.navigateUp()
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier
+                                            .size(20.dp),
+                                        imageVector = Lucide.ArrowLeft,
+                                        contentDescription = "Navigate Back",
+                                        tint = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
+                            },
+                        )
+                    }
+                    items(items = state.savedEvents) { event ->
+                        EventCard(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            onClick = {},
+                            title = event.title,
+                            description = event.description,
+                            eventType = event.type,
+                            date = event.date,
+                            time = event.time
+                        )
+                    }
+                }
             }
-            items(items = state.savedEvents) { event ->
-                EventCard(
-                    onClick = {},
-                    title = event.title,
-                    description = event.description,
-                    eventType = event.type,
-                    date = event.date,
-                    time = event.time
-                )
+
+            DeviceConfiguration.MOBILE_LANDSCAPE,
+            DeviceConfiguration.FOLDABLE,
+            DeviceConfiguration.TABLET_PORTRAIT,
+            DeviceConfiguration.TABLET_LANDSCAPE,
+            DeviceConfiguration.LARGE_TABLET,
+            DeviceConfiguration.DESKTOP -> {
+                LazyVerticalGrid(
+                    modifier = modifier.windowInsetsPadding(WindowInsets.displayCutout),
+                    columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding() + 4.dp)
+                ) {
+                    item(span = { GridItemSpan(2) }) {
+                        HeaderSection(
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            title = "Saved Events",
+                            subtitle = "${state.savedEvents.size} saved events",
+                            navigationIcon = {
+                                IconButton(
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    onClick = {
+                                        navController.navigateUp()
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier
+                                            .size(20.dp),
+                                        imageVector = Lucide.ArrowLeft,
+                                        contentDescription = "Navigate Back",
+                                        tint = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
+                            },
+                        )
+                    }
+                    items(items = state.savedEvents) { event ->
+                        EventCard(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            onClick = {},
+                            title = event.title,
+                            description = event.description,
+                            eventType = event.type,
+                            date = event.date,
+                            time = event.time
+                        )
+                    }
+                }
             }
         }
     }
 }
 
-@Preview
+@Preview(device = "spec:parent=pixel_tablet,orientation=portrait")
 @Composable
 private fun PreviewSavedEventsScreen() {
     CollegeAlertTheme {
         SavedEventsScreenContent(
             state = SavedEventsState(),
-            onAction = {}
+            onAction = {},
+            deviceConfiguration = DeviceConfiguration.TABLET_PORTRAIT
         )
     }
 }

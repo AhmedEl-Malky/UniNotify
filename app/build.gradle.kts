@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.malky.collegealert"
+    namespace = "com.malky.uninotify"
     compileSdk = 36
 
     defaultConfig {

@@ -62,7 +62,7 @@ class AuthenticationServiceImpl(
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
-        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(request.data)
+//        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(request.data)
         return firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
 
     }

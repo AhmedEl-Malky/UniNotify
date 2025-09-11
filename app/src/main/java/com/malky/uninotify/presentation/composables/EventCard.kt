@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.theme.CollegeAlertTheme
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.domain.core.EventType
 
 @Composable
 fun EventCard(

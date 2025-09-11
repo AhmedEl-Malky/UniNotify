@@ -25,10 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
+import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.CollegeAlertTheme
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.HeaderSection
@@ -56,7 +58,7 @@ private fun CategorizedEventsScreenContent(
     eventType: EventType,
     onAction: (CategorizedEventsAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-//    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -76,7 +78,7 @@ private fun CategorizedEventsScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -119,7 +121,7 @@ private fun CategorizedEventsScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -166,7 +168,7 @@ private fun CategorizedEventsScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -197,7 +199,7 @@ private fun CategorizedEventsScreenContent(
     }
 }
 
-@Preview(device = "spec:parent=pixel_tablet,orientation=landscape")
+@Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewCategorizedEventsScreen() {
     CollegeAlertTheme {
@@ -205,7 +207,7 @@ private fun PreviewCategorizedEventsScreen() {
             state = CategorizedEventsState(),
             eventType = EventType.Seminar,
             onAction = {},
-            deviceConfiguration = DeviceConfiguration.TABLET_LANDSCAPE
+            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
         )
     }
 }

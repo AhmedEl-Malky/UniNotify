@@ -98,12 +98,12 @@ private fun ProfileScreenContent(
                     }
                     item {
                         PersonalInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp)
+                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
                         )
                     }
                     item {
                         ContactInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp)
+                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
                         )
                     }
                     item {
@@ -247,14 +247,14 @@ private fun ProfileScreenContent(
     }
 }
 
-@Preview(device = "spec:parent=pixel_9,orientation=landscape")
+@Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewProfileScreen() {
     CollegeAlertTheme {
         ProfileScreenContent(
             state = ProfileState(),
             onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
+            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
         )
     }
 }

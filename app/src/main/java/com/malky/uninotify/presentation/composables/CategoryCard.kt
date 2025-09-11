@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.malky.uninotify.app.theme.CollegeAlertTheme
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.domain.core.EventType
 
 @Composable
 fun CategoryCard(

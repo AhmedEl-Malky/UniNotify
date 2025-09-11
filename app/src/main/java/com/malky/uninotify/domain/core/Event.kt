@@ -1,4 +1,6 @@
-package com.malky.uninotify.domain
+package com.malky.uninotify.domain.core
+
+import com.malky.uninotify.domain.core.EventType
 
 data class Event(
     val title: String,

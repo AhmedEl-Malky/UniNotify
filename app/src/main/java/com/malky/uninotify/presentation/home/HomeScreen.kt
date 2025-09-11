@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -68,7 +69,7 @@ private fun HomeScreenContent(
     state: HomeState,
     onAction: (HomeAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-//    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current
 ) {
     val navigationList = remember {
         mutableStateMapOf(
@@ -113,16 +114,16 @@ private fun HomeScreenContent(
                                     onClick = {
                                         when (key) {
                                             "Categories" -> {
-//                                                navController.navigate(Destination.Categories)
+                                                navController.navigate(Destination.Categories)
                                             }
 
                                             "Saved" -> {
-//                                                navController.navigate(Destination.SavedEvents)
+                                                navController.navigate(Destination.SavedEvents)
                                             }
 
                                             "Alerts" -> {}
                                             "Profile" -> {
-//                                                navController.navigate(Destination.Profile)
+                                                navController.navigate(Destination.Profile)
                                             }
 
                                             else -> Unit
@@ -145,7 +146,7 @@ private fun HomeScreenContent(
                         EventCard(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             onClick = {
-//                                navController.navigate(Destination.EventDetails)
+                                navController.navigate(Destination.EventDetails)
                             },
                             title = event.title,
                             description = event.description,
@@ -187,16 +188,16 @@ private fun HomeScreenContent(
                                 onClick = {
                                     when (key) {
                                         "Categories" -> {
-//                                            navController.navigate(Destination.Categories)
+                                            navController.navigate(Destination.Categories)
                                         }
 
                                         "Saved" -> {
-//                                            navController.navigate(Destination.SavedEvents)
+                                            navController.navigate(Destination.SavedEvents)
                                         }
 
                                         "Alerts" -> {}
                                         "Profile" -> {
-//                                            navController.navigate(Destination.Profile)
+                                            navController.navigate(Destination.Profile)
                                         }
 
                                         else -> Unit
@@ -243,7 +244,7 @@ private fun HomeScreenContent(
                                     .fillMaxSize()
                                     .padding(end = 8.dp),
                                 onClick = {
-//                                    navController.navigate(Destination.EventDetails)
+                                    navController.navigate(Destination.EventDetails)
                                 },
                                 title = event.title,
                                 description = event.description,
@@ -259,14 +260,14 @@ private fun HomeScreenContent(
     }
 }
 
-@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=landscape")
+@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewHomeScreen() {
     CollegeAlertTheme {
         HomeScreenContent(
             state = HomeState(),
             onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
+            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
         )
     }
 }

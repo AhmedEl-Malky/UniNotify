@@ -1,4 +1,4 @@
-package com.malky.uninotify.presentation.authentication
+package com.malky.uninotify.presentation.authentication.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.widthIn
@@ -17,31 +18,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.AppLogo
 import com.malky.uninotify.presentation.composables.AuthenticationHeaderSection
-import com.malky.uninotify.presentation.composables.LoginFormSection
+import com.malky.uninotify.presentation.composables.SignupForm
+import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
+fun SignupScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: AuthenticationViewModel
+    viewModel: SignupViewModel
 ) {
-    LoginScreenContent(
-        deviceConfiguration = deviceConfiguration
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    SignupScreenContent(
+        deviceConfiguration = deviceConfiguration,
+        state = state,
+        onAction = viewModel::onAction
     )
 }
 
 @Composable
-private fun LoginScreenContent(
+private fun SignupScreenContent(
     modifier: Modifier = Modifier
         .background(
             color = MaterialTheme.colorScheme.background,
@@ -49,14 +62,43 @@ private fun LoginScreenContent(
         )
         .padding(horizontal = 16.dp, vertical = 24.dp),
     deviceConfiguration: DeviceConfiguration,
+    state: SignupState,
+    onAction: (SignupAction) -> Unit,
     navController: NavHostController = LocalNavController.current
 ) {
+    val snackBarHost = remember{ SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    state.error?.asString()?.let { error ->
+        coroutineScope.launch{
+            snackBarHost.showSnackbar(
+                message = error,
+                actionLabel = "Dismiss",
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = WindowInsets.statusBars
+        contentWindowInsets = WindowInsets.statusBars,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBarHost
+            ){ it ->
+                Snackbar(
+                    modifier = Modifier
+                        .windowInsetsPadding(WindowInsets.navigationBars),
+                    snackbarData = it,
+                    shape = RoundedCornerShape(8.dp),
+                    contentColor = MaterialTheme.colorScheme.error,
+                    containerColor = MaterialTheme.colorScheme.background,
+                    actionColor = MaterialTheme.colorScheme.primary,
+                    actionContentColor = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -76,10 +118,12 @@ private fun LoginScreenContent(
                             .weight(1f),
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                     ) {
-                        AuthenticationHeaderSection(title = "Login")
-                        LoginFormSection(
+                        AuthenticationHeaderSection(title = "Signup")
+                        SignupForm(
                             modifier = Modifier.fillMaxWidth(),
-                            navController = navController
+                            navController = navController,
+                            state = state,
+                            onAction = onAction
                         )
                     }
                 }
@@ -94,11 +138,13 @@ private fun LoginScreenContent(
                     ) {
                         AuthenticationHeaderSection(
                             modifier = Modifier.weight(1f),
-                            title = "Login"
+                            title = "Signup"
                         )
-                        LoginFormSection(
+                        SignupForm(
                             modifier = Modifier.weight(1f),
-                            navController = navController
+                            navController = navController,
+                            state = state,
+                            onAction = onAction
                         )
                     }
                 }
@@ -119,23 +165,26 @@ private fun LoginScreenContent(
                         AuthenticationHeaderSection(
                             modifier = Modifier.widthIn(max = 540.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            title = "Login"
+                            title = "Signup"
                         )
-                        LoginFormSection(
+                        SignupForm(
                             modifier = Modifier.widthIn(max = 540.dp),
-                            navController = navController
+                            navController = navController,
+                            state = state,
+                            onAction = onAction
                         )
                     }
                 }
             }
+
         }
     }
 }
 
-@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=landscape")
+@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
-private fun PreviewLoginScreen() {
-    CollegeAlertTheme {
-//        LoginScreenContent()
+private fun PreviewSignupScreen() {
+    UniNotifyTheme {
+//        SignupScreenContent()
     }
 }

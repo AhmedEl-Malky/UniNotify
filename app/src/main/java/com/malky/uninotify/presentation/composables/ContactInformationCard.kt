@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.GraduationCap
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Mail
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.app.theme.Green
 
 @Composable
@@ -131,7 +131,7 @@ fun ContactInformationCard(
 @Preview
 @Composable
 private fun PreviewContactInformationCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         ContactInformationCard()
     }
 }

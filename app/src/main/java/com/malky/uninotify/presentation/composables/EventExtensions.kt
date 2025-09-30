@@ -9,11 +9,11 @@ import com.composables.icons.lucide.BookOpen
 import com.composables.icons.lucide.CircleAlert
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Trophy
-import com.malky.uninotify.domain.EventType
-import com.malky.uninotify.domain.EventType.Exam
-import com.malky.uninotify.domain.EventType.Fest
-import com.malky.uninotify.domain.EventType.Notice
-import com.malky.uninotify.domain.EventType.Seminar
+import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.core.EventType.Exam
+import com.malky.uninotify.domain.core.EventType.Fest
+import com.malky.uninotify.domain.core.EventType.Notice
+import com.malky.uninotify.domain.core.EventType.Seminar
 
 @Composable
 fun EventType.eventTheme() : Color{

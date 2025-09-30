@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun EventInformationCard(
@@ -68,7 +68,7 @@ fun EventInformationCard(
 @Preview
 @Composable
 fun PreviewEventInformationCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         EventInformationCard(
             title = "AI & Machine Learning Seminar",
             description ="Learn about the latest trends in AI and ML from industry experts."

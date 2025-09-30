@@ -43,7 +43,7 @@ import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.User
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.EventsCountSection
@@ -68,7 +68,7 @@ private fun HomeScreenContent(
     state: HomeState,
     onAction: (HomeAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-//    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current
 ) {
     val navigationList = remember {
         mutableStateMapOf(
@@ -113,16 +113,16 @@ private fun HomeScreenContent(
                                     onClick = {
                                         when (key) {
                                             "Categories" -> {
-//                                                navController.navigate(Destination.Categories)
+                                                navController.navigate(Destination.Categories)
                                             }
 
                                             "Saved" -> {
-//                                                navController.navigate(Destination.SavedEvents)
+                                                navController.navigate(Destination.SavedEvents)
                                             }
 
                                             "Alerts" -> {}
                                             "Profile" -> {
-//                                                navController.navigate(Destination.Profile)
+                                                navController.navigate(Destination.Profile)
                                             }
 
                                             else -> Unit
@@ -145,7 +145,7 @@ private fun HomeScreenContent(
                         EventCard(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             onClick = {
-//                                navController.navigate(Destination.EventDetails)
+                                navController.navigate(Destination.EventDetails)
                             },
                             title = event.title,
                             description = event.description,
@@ -187,16 +187,16 @@ private fun HomeScreenContent(
                                 onClick = {
                                     when (key) {
                                         "Categories" -> {
-//                                            navController.navigate(Destination.Categories)
+                                            navController.navigate(Destination.Categories)
                                         }
 
                                         "Saved" -> {
-//                                            navController.navigate(Destination.SavedEvents)
+                                            navController.navigate(Destination.SavedEvents)
                                         }
 
                                         "Alerts" -> {}
                                         "Profile" -> {
-//                                            navController.navigate(Destination.Profile)
+                                            navController.navigate(Destination.Profile)
                                         }
 
                                         else -> Unit
@@ -243,7 +243,7 @@ private fun HomeScreenContent(
                                     .fillMaxSize()
                                     .padding(end = 8.dp),
                                 onClick = {
-//                                    navController.navigate(Destination.EventDetails)
+                                    navController.navigate(Destination.EventDetails)
                                 },
                                 title = event.title,
                                 description = event.description,
@@ -259,14 +259,14 @@ private fun HomeScreenContent(
     }
 }
 
-@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=landscape")
+@Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewHomeScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         HomeScreenContent(
             state = HomeState(),
             onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
+            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
         )
     }
 }

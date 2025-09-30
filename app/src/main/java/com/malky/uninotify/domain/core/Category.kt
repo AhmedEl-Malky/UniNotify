@@ -1,4 +1,4 @@
-package com.malky.uninotify.domain
+package com.malky.uninotify.domain.core
 
 data class Category(
     val id: Int,

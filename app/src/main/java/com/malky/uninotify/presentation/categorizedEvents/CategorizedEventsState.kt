@@ -1,7 +1,7 @@
 package com.malky.uninotify.presentation.categorizedEvents
 
-import com.malky.uninotify.domain.Event
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.domain.core.Event
+import com.malky.uninotify.domain.core.EventType
 
 data class CategorizedEventsState(
     val isLoading: Boolean = true,

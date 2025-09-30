@@ -28,7 +28,7 @@ import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.CategoryCard
 import com.malky.uninotify.presentation.composables.HeaderSection
@@ -124,7 +124,7 @@ private fun CategoriesScreenContent(
 @Preview(device = "spec:parent=pixel_tablet,orientation=landscape")
 @Composable
 private fun PreviewCategoriesScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         CategoriesScreenContent(
             state = CategoriesState(),
             deviceConfiguration = DeviceConfiguration.TABLET_LANDSCAPE

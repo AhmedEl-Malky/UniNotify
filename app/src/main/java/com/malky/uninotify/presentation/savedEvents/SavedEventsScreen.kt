@@ -31,7 +31,7 @@ import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.HeaderSection
@@ -163,7 +163,7 @@ private fun SavedEventsScreenContent(
 @Preview(device = "spec:parent=pixel_tablet,orientation=portrait")
 @Composable
 private fun PreviewSavedEventsScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         SavedEventsScreenContent(
             state = SavedEventsState(),
             onAction = {},

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">UniNotify</string>
+    <string name="SomethingWentWrong">Something went wrong</string>
+    <string name="InvalidCredentials">Wrong email or password</string>
+    <string name="UserNotFound">There is no email such this</string>
+    <string name="EmailAlreadyExist">Email already exists</string>
+    <string name="InvalidName">invalid name</string>
+    <string name="EmptyName">Name can\'t be empty</string>
+    <string name="InvalidEmail">Invalid email</string>
+    <string name="EmptyEmail">Email can\'t be empty</string>
+    <string name="EmptyPassword">Password can\`t be empty</string>
+    <string name="ShortPassword">Password can\'t be less than 8 characters</string>
+    <string name="PasswordDoesntMatch">Confirm password doesn\'t match with password</string>
+    <string name="RequestTimeout">Request timeout</string>
+    <string name="TooManyRequests">Too many requests</string>
+    <string name="NoInternet">There is no internet connection</string>
+    <string name="ServerError">Server error</string>
+    <string name="UnAuthorized">Unauthorized</string>
+    <string name="NotFound">Not Found</string>
+    <string name="SerializationError">Serialization Error</string>
+    <string name="UnknownError">Unknown error has occurred</string>
 </resources>

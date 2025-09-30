@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.domain.core.EventType
 
 @Composable
 fun CategoryCard(
@@ -85,7 +85,7 @@ fun CategoryCard(
 @Preview
 @Composable
 private fun PreviewCategoryCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         CategoryCard(
             eventType = EventType.Seminar,
             eventsCount = 5,

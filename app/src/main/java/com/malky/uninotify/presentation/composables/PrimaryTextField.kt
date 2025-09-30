@@ -19,7 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun PrimaryTextField(
@@ -79,7 +79,7 @@ fun PrimaryTextField(
 @Composable
 private fun PreviewPrimaryTextField() {
     var text by remember { mutableStateOf("sfgsgsgs") }
-    CollegeAlertTheme {
+    UniNotifyTheme {
         PrimaryTextField(
             value = text,
             onValueChange = { text = it },

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun AuthenticationHeaderSection(
@@ -39,7 +39,7 @@ fun AuthenticationHeaderSection(
 @Preview
 @Composable
 private fun PreviewAuthenticationHeaderSection() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         AuthenticationHeaderSection(
             title = "Login"
         )

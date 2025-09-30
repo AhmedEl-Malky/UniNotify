@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,18 +28,25 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.EyeOff
 import com.composables.icons.lucide.Lucide
+import com.malky.uninotify.app.navigation.Destination
+import com.malky.uninotify.presentation.authentication.signup.SignupAction
+import com.malky.uninotify.presentation.authentication.signup.SignupState
 
 @Composable
-fun SignupFormSection(
+fun SignupForm(
     modifier: Modifier = Modifier,
-//    navController: NavHostController
+    state: SignupState,
+    onAction: (SignupAction) -> Unit,
+    navController: NavHostController
 ) {
     val focusRequester = LocalFocusManager.current
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
     var isConfirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,8 +66,10 @@ fun SignupFormSection(
                 )
                 PrimaryTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = "",
-                    onValueChange = {},
+                    value = state.firstName,
+                    onValueChange = { value ->
+                        onAction(SignupAction.OnFirstNameChange(value))
+                    },
                     placeholder = {
                         Text(
                             text = "First Name",
@@ -69,6 +80,15 @@ fun SignupFormSection(
                             )
                         )
                     },
+                    isError = state.firstNameValidation != null,
+                    supportingText = {
+                        state.firstNameValidation?.let {
+                            Text(
+                                text = it.asString(),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
@@ -76,6 +96,7 @@ fun SignupFormSection(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusRequester.moveFocus(FocusDirection.Next)
+                            onAction(SignupAction.OnFirstNameValidate)
                         }
                     )
                 )
@@ -90,8 +111,10 @@ fun SignupFormSection(
                 )
                 PrimaryTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = "",
-                    onValueChange = {},
+                    value = state.lastName,
+                    onValueChange = { value ->
+                        onAction(SignupAction.OnLastNameChange(value))
+                    },
                     placeholder = {
                         Text(
                             text = "Last Name",
@@ -102,13 +125,23 @@ fun SignupFormSection(
                             )
                         )
                     },
+                    isError = state.lastNameValidation != null,
+                    supportingText = {
+                        state.lastNameValidation?.let {
+                            Text(
+                                text = it.asString(),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onDone = {
+                        onNext = {
                             focusRequester.moveFocus(FocusDirection.Next)
+                            onAction(SignupAction.OnLastNameValidate)
                         }
                     ),
                 )
@@ -123,8 +156,10 @@ fun SignupFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.email,
+                onValueChange = { value ->
+                    onAction(SignupAction.OnEmailChange(value))
+                },
                 placeholder = {
                     Text(
                         text = "Email",
@@ -135,6 +170,15 @@ fun SignupFormSection(
                         )
                     )
                 },
+                isError = state.emailValidation != null,
+                supportingText = {
+                    state.emailValidation?.let {
+                        Text(
+                            text = it.asString(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
@@ -142,6 +186,7 @@ fun SignupFormSection(
                 keyboardActions = KeyboardActions(
                     onNext = {
                         focusRequester.moveFocus(FocusDirection.Down)
+                        onAction(SignupAction.OnEmailValidate)
                     }
                 )
             )
@@ -155,8 +200,10 @@ fun SignupFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "fafafa",
-                onValueChange = {},
+                value = state.password,
+                onValueChange = { value ->
+                    onAction(SignupAction.OnPasswordChange(value))
+                },
                 placeholder = {
                     Text(
                         text = "Password",
@@ -167,6 +214,15 @@ fun SignupFormSection(
                         )
                     )
                 },
+                isError = state.passwordValidation != null,
+                supportingText = {
+                    state.passwordValidation?.let {
+                        Text(
+                            text = it.asString(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
@@ -174,6 +230,7 @@ fun SignupFormSection(
                 keyboardActions = KeyboardActions(
                     onNext = {
                         focusRequester.moveFocus(FocusDirection.Next)
+                        onAction(SignupAction.OnPasswordValidate)
                     }
                 ),
                 visualTransformation = if (!isPasswordVisible) PasswordVisualTransformation(mask = '•') else VisualTransformation.None,
@@ -201,8 +258,10 @@ fun SignupFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.confirmPassword,
+                onValueChange = { value ->
+                    onAction(SignupAction.OnConfirmPasswordChange(value))
+                },
                 placeholder = {
                     Text(
                         text = "Confirm Password",
@@ -213,12 +272,24 @@ fun SignupFormSection(
                         )
                     )
                 },
+                isError = state.confirmPasswordValidation != null,
+                supportingText = {
+                    state.confirmPasswordValidation?.let {
+                        Text(
+                            text = it.asString(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { }
+                    onDone = {
+                        focusRequester.clearFocus()
+                        onAction(SignupAction.OnConfirmPasswordValidate)
+                    }
                 ),
                 visualTransformation = if (!isConfirmPasswordVisible) PasswordVisualTransformation(
                     mask = '•'
@@ -243,14 +314,30 @@ fun SignupFormSection(
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onClick = {
-//                navController.navigate(Destination.MainGraph)
-            },
-
-            ) {
-            Text(
-                text = "Signup",
-                style = MaterialTheme.typography.titleLarge
-            )
+                onAction(
+                    SignupAction.OnSignup(
+                        onSuccess = {
+                            navController.navigate(Destination.MainGraph){
+                                popUpTo(Destination.AuthenticationGraph){
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    )
+                )
+            }
+        ) {
+            if (state.isLoading)
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    strokeWidth = 4.dp
+                )
+            else
+                Text(
+                    text = "Signup",
+                    style = MaterialTheme.typography.titleLarge
+                )
         }
     }
 }

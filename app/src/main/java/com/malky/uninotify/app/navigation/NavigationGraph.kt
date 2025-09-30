@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.malky.uninotify.presentation.DeviceConfiguration
-import com.malky.uninotify.presentation.authentication.LoginScreen
-import com.malky.uninotify.presentation.authentication.SignupScreen
+import com.malky.uninotify.presentation.authentication.login.LoginScreen
+import com.malky.uninotify.presentation.authentication.signup.SignupScreen
 import com.malky.uninotify.presentation.categories.CategoriesScreen
 import com.malky.uninotify.presentation.categorizedEvents.CategorizedEventsScreen
 import com.malky.uninotify.presentation.eventDetails.EventDetailsScreen

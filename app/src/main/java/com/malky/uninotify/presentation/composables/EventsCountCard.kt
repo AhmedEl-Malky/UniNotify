@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun EventsCountCard(
@@ -57,7 +57,7 @@ fun EventsCountCard(
 @Preview
 @Composable
 private fun PreviewEventsCountCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         EventsCountCard(
             eventsCount = 4,
             title = "Upcoming Events",

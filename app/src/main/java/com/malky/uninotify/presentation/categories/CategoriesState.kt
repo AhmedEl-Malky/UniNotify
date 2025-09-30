@@ -1,6 +1,6 @@
 package com.malky.uninotify.presentation.categories
 
-import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.domain.core.EventType
 
 data class CategoriesState(
     val isLoading: Boolean = true,

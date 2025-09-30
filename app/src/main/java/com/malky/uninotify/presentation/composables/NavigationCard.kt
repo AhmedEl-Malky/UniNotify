@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.BookOpen
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun NavigationCard(
@@ -42,7 +42,8 @@ fun NavigationCard(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(horizontal = 8.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -74,7 +75,7 @@ private fun navigationCardTheme(label: String): Color{
 @Preview
 @Composable
 private fun PreviewNavigationCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         NavigationCard(
             icon = Lucide.BookOpen,
             label = "Categories",

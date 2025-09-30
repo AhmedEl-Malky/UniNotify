@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.domain.core.EventType
 
 @Composable
@@ -142,7 +142,7 @@ fun EventCard(
 @Preview
 @Composable
 private fun PreviewEventCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         EventCard(
             onClick = {},
             title = "AI & Machine Learning Seminar",

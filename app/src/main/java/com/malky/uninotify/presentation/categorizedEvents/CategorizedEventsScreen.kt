@@ -29,7 +29,7 @@ import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
@@ -202,7 +202,7 @@ private fun CategorizedEventsScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewCategorizedEventsScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         CategorizedEventsScreenContent(
             state = CategorizedEventsState(),
             eventType = EventType.Seminar,

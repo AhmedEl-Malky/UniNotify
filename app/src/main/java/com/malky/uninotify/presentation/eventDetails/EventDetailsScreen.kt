@@ -40,7 +40,7 @@ import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Plus
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventDetailsCard
 import com.malky.uninotify.presentation.composables.EventInformationCard
@@ -343,7 +343,7 @@ private fun EventDetailsScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=landscape")
 @Composable
 private fun PreviewEventDetailsScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         EventDetailsScreenContent(
             state = EventDetailsState(),
             onAction = {},

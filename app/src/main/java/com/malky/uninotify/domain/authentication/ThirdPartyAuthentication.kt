@@ -5,5 +5,5 @@ import com.malky.uninotify.utils.AuthenticationErrors
 import com.malky.uninotify.utils.Response
 
 interface ThirdPartyAuthentication {
-    suspend fun signInWithGoogle() : Response<FirebaseUser, AuthenticationErrors>
+//    suspend fun signInWithGoogle() : Response<FirebaseUser, AuthenticationErrors>
 }

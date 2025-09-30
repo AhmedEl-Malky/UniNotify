@@ -26,7 +26,7 @@ import com.composables.icons.lucide.Bell
 import com.composables.icons.lucide.CircleHelp
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Settings
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 
 @Composable
@@ -136,7 +136,7 @@ fun SettingsCard(
 @Preview
 @Composable
 private fun PreviewSettingsCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         SettingsCard()
     }
 }

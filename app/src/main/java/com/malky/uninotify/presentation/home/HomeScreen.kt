@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -44,7 +43,7 @@ import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.User
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.EventsCountSection
@@ -263,7 +262,7 @@ private fun HomeScreenContent(
 @Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewHomeScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         HomeScreenContent(
             state = HomeState(),
             onAction = {},

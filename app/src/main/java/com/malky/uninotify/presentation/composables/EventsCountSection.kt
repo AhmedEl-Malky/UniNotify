@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun EventsCountSection(
@@ -54,7 +54,7 @@ fun EventsCountSection(
 @Preview
 @Composable
 private fun PreviewEventsCountSection() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         EventsCountSection(
             upcomingEventsCount = 4,
             savedEventsCount = 0

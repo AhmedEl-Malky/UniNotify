@@ -32,7 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.LogOut
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.ContactInformationCard
 import com.malky.uninotify.presentation.composables.HeaderSection
@@ -250,7 +250,7 @@ private fun ProfileScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewProfileScreen() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         ProfileScreenContent(
             state = ProfileState(),
             onAction = {},

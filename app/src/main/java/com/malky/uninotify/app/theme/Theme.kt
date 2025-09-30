@@ -25,7 +25,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun CollegeAlertTheme(
+fun UniNotifyTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = LightColorScheme

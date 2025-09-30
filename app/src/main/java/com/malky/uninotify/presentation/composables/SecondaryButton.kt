@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun SecondaryButton(
@@ -38,7 +38,7 @@ fun SecondaryButton(
 @Preview
 @Composable
 private fun PreviewSecondaryButton() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         SecondaryButton(
             onClick = {},
             content = {}

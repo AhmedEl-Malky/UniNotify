@@ -30,7 +30,7 @@ import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.R
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun HeaderSection(
@@ -106,7 +106,7 @@ fun HeaderSection(
 @Preview(widthDp = 384, showBackground = true)
 @Composable
 private fun PreviewHeaderSection() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         HeaderSection(
             extraContent = {
                 Row(

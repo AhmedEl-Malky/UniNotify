@@ -1,5 +1,7 @@
 package com.malky.uninotify.utils
 
+import com.malky.uninotify.R
+
 object UserDataValidator {
 
     fun validateName(name: String): Response<Unit,UserDataError>{
@@ -28,7 +30,7 @@ object UserDataValidator {
             return Response.Error(UserDataError.Password_is_empty)
         }
         if (password.length < 8){
-            return Response.Error(UserDataError.Invalid_Password)
+            return Response.Error(UserDataError.Short_Password)
         }
         return Response.Success(Unit)
     }
@@ -47,8 +49,21 @@ object UserDataValidator {
         Invalid_Email,
         Email_is_empty,
         Password_is_empty,
-        Invalid_Password,
-        Passwords_Dont_Match
+        Short_Password,
+        Passwords_Dont_Match;
+
+        override fun toUiText(): UiText {
+            val stringRes = when (this) {
+                Invalid_Name -> R.string.InvalidName
+                Name_is_empty -> R.string.EmptyName
+                Invalid_Email -> R.string.InvalidEmail
+                Email_is_empty -> R.string.EmptyEmail
+                Password_is_empty -> R.string.EmptyPassword
+                Short_Password -> R.string.ShortPassword
+                Passwords_Dont_Match -> R.string.PasswordDoesntMatch
+            }
+            return UiText.StringResourceId(stringRes)
+        }
     }
 
 }

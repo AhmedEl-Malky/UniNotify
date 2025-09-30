@@ -1,3 +1,5 @@
 package com.malky.uninotify.utils
 
-sealed interface ErrorType
+sealed interface ErrorType{
+    fun toUiText(): UiText
+}

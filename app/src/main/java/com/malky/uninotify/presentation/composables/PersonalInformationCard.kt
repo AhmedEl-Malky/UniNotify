@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @Composable
 fun PersonalInformationCard(
@@ -101,7 +101,7 @@ fun PersonalInformationCard(
 @Preview
 @Composable
 private fun PreviewPersonalInformationCard() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
         PersonalInformationCard()
     }
 }

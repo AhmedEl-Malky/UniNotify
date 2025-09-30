@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,11 +41,17 @@ import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.EyeOff
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.Destination
-import com.malky.uninotify.app.theme.CollegeAlertTheme
+import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.authentication.login.LoginState
 
 @Composable
-fun LoginFormSection(
+fun LoginForm(
     modifier: Modifier = Modifier,
+    state: LoginState,
+    onEmailChange:(String) -> Unit,
+    onEmailValidate:() -> Unit,
+    onPasswordChange:(String) -> Unit,
+    onSignIn:(() -> Unit) -> Unit,
     navController: NavHostController
 ) {
     val focusRequester = LocalFocusManager.current
@@ -62,8 +70,8 @@ fun LoginFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.email,
+                onValueChange = { onEmailChange(it) },
                 placeholder = {
                     Text(
                         text = "Email",
@@ -74,12 +82,22 @@ fun LoginFormSection(
                         )
                     )
                 },
+                isError = state.emailValidation != null,
+                supportingText = {
+                    state.emailValidation?.let {
+                        Text(
+                            text = it.asString(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
                     onNext = {
+                        onEmailValidate()
                         focusRequester.moveFocus(FocusDirection.Down)
                     }
                 )
@@ -94,8 +112,8 @@ fun LoginFormSection(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.password,
+                onValueChange = { onPasswordChange(it) },
                 placeholder = {
                     Text(
                         text = "Password",
@@ -111,7 +129,9 @@ fun LoginFormSection(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { }
+                    onDone = {
+                        focusRequester.clearFocus()
+                    }
                 ),
                 visualTransformation = if (!isPasswordVisible) PasswordVisualTransformation(mask = '•') else VisualTransformation.None,
                 trailingIcon = {
@@ -134,13 +154,27 @@ fun LoginFormSection(
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onClick = {
-                navController.navigate(Destination.MainGraph)
+                focusRequester.clearFocus()
+                onSignIn{
+                    navController.navigate(Destination.MainGraph){
+                        popUpTo(Destination.AuthenticationGraph) { 
+                            inclusive = true
+                        }
+                    }
+                }
             },
         ) {
-            Text(
-                text = "Login",
-                style = MaterialTheme.typography.titleLarge
-            )
+            if (state.isLoading)
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    strokeWidth = 4.dp
+                )
+            else
+                Text(
+                    text = "Login",
+                    style = MaterialTheme.typography.titleLarge
+                )
         }
         Text(
             modifier = Modifier
@@ -174,7 +208,7 @@ fun LoginFormSection(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewLoginFormSection() {
-    CollegeAlertTheme {
+    UniNotifyTheme {
 //        LoginFormSection()
     }
 }

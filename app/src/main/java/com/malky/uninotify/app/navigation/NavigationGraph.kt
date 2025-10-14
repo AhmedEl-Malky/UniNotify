@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.authentication.login.LoginScreen
 import com.malky.uninotify.presentation.authentication.signup.SignupScreen
@@ -18,19 +20,36 @@ import com.malky.uninotify.presentation.eventDetails.EventDetailsScreen
 import com.malky.uninotify.presentation.home.HomeScreen
 import com.malky.uninotify.presentation.profile.ProfileScreen
 import com.malky.uninotify.presentation.savedEvents.SavedEventsScreen
+import javax.inject.Inject
 
 val LocalNavController = compositionLocalOf<NavHostController> {
     error("No NavController found!")
 }
+
+val LocalUser = compositionLocalOf<FirebaseUser?> {
+    error("No current user")
+}
+
+val auth = FirebaseAuth.getInstance()
+
 
 @Composable
 fun NavigationGraph(
     deviceConfiguration: DeviceConfiguration
 ) {
     val navController = rememberNavController()
-    CompositionLocalProvider(LocalNavController provides navController) {
+    CompositionLocalProvider(
+        LocalNavController provides navController,
+        LocalUser provides auth.currentUser
+    ) {
+        val user = LocalUser.current
         NavHost(navController = navController, startDestination = Destination.AppGraph) {
-            navigation<Destination.AppGraph>(startDestination = Destination.AuthenticationGraph) {
+            navigation<Destination.AppGraph>(
+                startDestination = if (user != null)
+                    Destination.MainGraph
+                else
+                    Destination.AuthenticationGraph
+            ) {
                 navigation<Destination.AuthenticationGraph>(startDestination = Destination.Login) {
                     composable<Destination.Login> {
                         LoginScreen(

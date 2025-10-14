@@ -4,6 +4,7 @@ package com.malky.uninotify.presentation.authentication.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.malky.uninotify.domain.authentication.AuthenticationService
+import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
 import com.malky.uninotify.utils.UserDataValidator
 import com.malky.uninotify.utils.onError
 import com.malky.uninotify.utils.onSuccess
@@ -19,12 +20,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val authService : AuthenticationService
-) : ViewModel(){
+    private val authService: AuthenticationService,
+    private val thirdPartyAuth: ThirdPartyAuthentication
+) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    fun onEmailChange(value: String){
+    fun onEmailChange(value: String) {
         _state.update {
             it.copy(
                 email = value,
@@ -33,7 +35,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onEmailValidate(){
+    fun onEmailValidate() {
         UserDataValidator.validateEmail(_state.value.email)
             .onSuccess {
                 _state.update {
@@ -52,7 +54,7 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    fun onPasswordChange(value: String){
+    fun onPasswordChange(value: String) {
         _state.update {
             it.copy(
                 password = value,
@@ -60,9 +62,9 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onSignIn(onSuccess:() -> Unit){
+    fun onSignIn(onSuccess: () -> Unit) {
         onEmailValidate()
-        if(_state.value.emailValidation == null){
+        if (_state.value.emailValidation == null) {
             _state.update {
                 it.copy(
                     isLoading = true,
@@ -76,15 +78,15 @@ class LoginViewModel @Inject constructor(
                 ).onSuccess {
                     _state.update {
                         it.copy(
-                            isLoading = false,
+                            isGoogleSignInLoading = false,
                             error = null
                         )
                     }
-                    withContext(Dispatchers.Main){ onSuccess() }
+                    withContext(Dispatchers.Main) { onSuccess() }
                 }.onError { error ->
                     _state.update {
                         it.copy(
-                            isLoading = false,
+                            isGoogleSignInLoading = false,
                             error = error.toUiText()
                         )
                     }
@@ -95,6 +97,34 @@ class LoginViewModel @Inject constructor(
                         error = null
                     )
                 }
+            }
+        }
+    }
+
+    fun onSignInWithGoogle(onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update {
+                it.copy(
+                    isGoogleSignInLoading = true,
+                    error = null
+                )
+            }
+            thirdPartyAuth.signInWithGoogle()
+                .onSuccess {
+                    withContext(Dispatchers.Main) { onSuccess() }
+                }.onError { error ->
+                    _state.update {
+                        it.copy(
+                            isGoogleSignInLoading = false,
+                            error = error.toUiText()
+                        )
+                    }
+                }
+            delay(500)
+            _state.update {
+                it.copy(
+                    error = null
+                )
             }
         }
     }

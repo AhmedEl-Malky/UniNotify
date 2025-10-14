@@ -52,6 +52,7 @@ fun LoginScreen(
         onEmailValidate = viewModel::onEmailValidate,
         onPasswordChange = viewModel::onPasswordChange,
         onSignIn = viewModel::onSignIn,
+        onSignInWithGoogle = viewModel::onSignInWithGoogle,
         deviceConfiguration = deviceConfiguration
     )
 }
@@ -69,6 +70,7 @@ private fun LoginScreenContent(
     onEmailValidate:() -> Unit,
     onPasswordChange:(String) -> Unit,
     onSignIn:(() -> Unit) -> Unit,
+    onSignInWithGoogle:(() -> Unit) -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
@@ -132,6 +134,7 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
+                            onSignInWithGoogle = onSignInWithGoogle,
                             navController = navController
                         )
                     }
@@ -156,6 +159,7 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
+                            onSignInWithGoogle = onSignInWithGoogle,
                             navController = navController
                         )
                     }
@@ -186,6 +190,7 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
+                            onSignInWithGoogle = onSignInWithGoogle,
                             navController = navController
                         )
                     }

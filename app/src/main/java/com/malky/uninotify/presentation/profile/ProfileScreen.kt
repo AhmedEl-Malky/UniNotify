@@ -29,9 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.LogOut
 import com.composables.icons.lucide.Lucide
+import com.malky.uninotify.app.navigation.Destination
+import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.ContactInformationCard
@@ -48,7 +51,7 @@ fun ProfileScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     ProfileScreenContent(
         state = state,
-        onAction = viewModel::onAction,
+        onSignOut = viewModel::signOut,
         deviceConfiguration = deviceConfiguration
     )
 }
@@ -59,9 +62,9 @@ private fun ProfileScreenContent(
         .fillMaxSize()
         .background(color = MaterialTheme.colorScheme.background),
     state: ProfileState,
-    onAction: (ProfileAction) -> Unit,
+    onSignOut: (() -> Unit) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-//    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,7 +85,7 @@ private fun ProfileScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -98,12 +101,16 @@ private fun ProfileScreenContent(
                     }
                     item {
                         PersonalInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 16.dp)
                         )
                     }
                     item {
                         ContactInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 16.dp)
                         )
                     }
                     item {
@@ -115,7 +122,15 @@ private fun ProfileScreenContent(
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .padding(horizontal = 16.dp),
-                            onClick = {},
+                            onClick = {
+                                onSignOut {
+                                    navController.navigate(Destination.AuthenticationGraph) {
+                                        popUpTo(Destination.MainGraph) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
@@ -184,7 +199,7 @@ private fun ProfileScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -217,7 +232,15 @@ private fun ProfileScreenContent(
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .padding(horizontal = 16.dp),
-                            onClick = {},
+                            onClick = {
+                                onSignOut {
+                                    navController.navigate(Destination.AuthenticationGraph) {
+                                        popUpTo(Destination.MainGraph) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
@@ -253,7 +276,7 @@ private fun PreviewProfileScreen() {
     UniNotifyTheme {
         ProfileScreenContent(
             state = ProfileState(),
-            onAction = {},
+            onSignOut = {},
             deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
         )
     }

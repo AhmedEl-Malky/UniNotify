@@ -28,7 +28,6 @@ suspend inline fun authenticate(
     } catch (e: FirebaseAuthUserCollisionException) {
         return Response.Error(AuthenticationErrors.Email_Already_Exists)
     }catch (e: Exception) {
-        Log.d("AuthExc", e.message.toString())
         return Response.Error(RemoteError.UNKNOWN)
     }
 }

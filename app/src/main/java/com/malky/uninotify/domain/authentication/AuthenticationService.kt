@@ -17,5 +17,4 @@ interface AuthenticationService {
     ): Response<FirebaseUser, ErrorType>
 
     suspend fun signOut()
-
 }

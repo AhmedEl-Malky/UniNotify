@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.CircularWavyProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +38,7 @@ import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.presentation.authentication.signup.SignupAction
 import com.malky.uninotify.presentation.authentication.signup.SignupState
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SignupForm(
     modifier: Modifier = Modifier,
@@ -328,10 +331,10 @@ fun SignupForm(
             }
         ) {
             if (state.isLoading)
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
+                CircularWavyProgressIndicator(
+                    modifier = Modifier.size(32.dp),
                     color = MaterialTheme.colorScheme.onPrimary,
-                    strokeWidth = 4.dp
+                    wavelength = 8.dp,
                 )
             else
                 Text(

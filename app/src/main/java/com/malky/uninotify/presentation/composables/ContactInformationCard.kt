@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.GraduationCap
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Mail
+import com.malky.uninotify.app.navigation.LocalUser
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.app.theme.Green
 
@@ -82,7 +83,7 @@ fun ContactInformationCard(
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        text = "Ahmed.R.Elmalky@gmail.com",
+                        text = LocalUser.current!!.email!!,
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.onSurface.copy(
                                 alpha = 0.75f

@@ -2,7 +2,7 @@ package com.malky.uninotify.utils
 
 import com.malky.uninotify.R
 
-enum class RemoteError : ErrorType {
+enum class RemoteDataErrors : ErrorType {
     REQUEST_TIMEOUT,
     TOO_MANY_REQUESTS,
     NO_INTERNET,
@@ -26,3 +26,10 @@ enum class RemoteError : ErrorType {
         return UiText.StringResourceId(stringRes)
     }
 }
+
+//enum class LocalDataErrors : ErrorType {
+//
+//
+//    override fun toUiText(): UiText {
+//    }
+//}

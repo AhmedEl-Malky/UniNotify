@@ -43,7 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
+    updateUser:() -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LoginScreenContent(
@@ -52,7 +53,9 @@ fun LoginScreen(
         onEmailValidate = viewModel::onEmailValidate,
         onPasswordChange = viewModel::onPasswordChange,
         onSignIn = viewModel::onSignIn,
-        deviceConfiguration = deviceConfiguration
+        onSignInWithGoogle = viewModel::onSignInWithGoogle,
+        deviceConfiguration = deviceConfiguration,
+        updateUser = updateUser
     )
 }
 
@@ -69,6 +72,8 @@ private fun LoginScreenContent(
     onEmailValidate:() -> Unit,
     onPasswordChange:(String) -> Unit,
     onSignIn:(() -> Unit) -> Unit,
+    onSignInWithGoogle:(() -> Unit) -> Unit,
+    updateUser:() -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
@@ -132,6 +137,8 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
+                            onSignInWithGoogle = onSignInWithGoogle,
+                            updateUser = updateUser,
                             navController = navController
                         )
                     }
@@ -156,7 +163,9 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
-                            navController = navController
+                            onSignInWithGoogle = onSignInWithGoogle,
+                            navController = navController,
+                            updateUser = updateUser
                         )
                     }
                 }
@@ -186,6 +195,8 @@ private fun LoginScreenContent(
                             onEmailValidate = onEmailValidate,
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
+                            onSignInWithGoogle = onSignInWithGoogle,
+                            updateUser = updateUser,
                             navController = navController
                         )
                     }

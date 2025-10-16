@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.UserSharedViewModel
 import com.malky.uninotify.presentation.authentication.login.LoginScreen
 import com.malky.uninotify.presentation.authentication.signup.SignupScreen
 import com.malky.uninotify.presentation.categories.CategoriesScreen
@@ -25,23 +26,33 @@ val LocalNavController = compositionLocalOf<NavHostController> {
 
 @Composable
 fun NavigationGraph(
-    deviceConfiguration: DeviceConfiguration
+    deviceConfiguration: DeviceConfiguration,
 ) {
     val navController = rememberNavController()
-    CompositionLocalProvider(LocalNavController provides navController) {
+    CompositionLocalProvider(
+        LocalNavController provides navController,
+    ) {
+        val userViewModel: UserSharedViewModel = hiltViewModel()
         NavHost(navController = navController, startDestination = Destination.AppGraph) {
-            navigation<Destination.AppGraph>(startDestination = Destination.AuthenticationGraph) {
+            navigation<Destination.AppGraph>(
+                startDestination = if (userViewModel.user != null)
+                    Destination.MainGraph
+                else
+                    Destination.AuthenticationGraph
+            ) {
                 navigation<Destination.AuthenticationGraph>(startDestination = Destination.Login) {
                     composable<Destination.Login> {
                         LoginScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            updateUser = userViewModel::updateUser
                         )
                     }
                     composable<Destination.Signup> {
                         SignupScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            updateUser = userViewModel::updateUser
                         )
                     }
                 }
@@ -49,37 +60,44 @@ fun NavigationGraph(
                     composable<Destination.Home> {
                         HomeScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            user = userViewModel.user!!
                         )
                     }
                     composable<Destination.Categories> {
                         CategoriesScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            user = userViewModel.user!!
                         )
                     }
                     composable<Destination.SavedEvents> {
                         SavedEventsScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            user = userViewModel.user!!
                         )
                     }
                     composable<Destination.EventDetails> {
                         EventDetailsScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            user = userViewModel.user!!
                         )
                     }
                     composable<Destination.Profile> {
                         ProfileScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            updateUser = userViewModel::updateUser,
+                            user = userViewModel.user!!
                         )
                     }
                     composable<Destination.CategorizedEvents> {
                         CategorizedEventsScreen(
                             deviceConfiguration = deviceConfiguration,
-                            viewModel = hiltViewModel()
+                            viewModel = hiltViewModel(),
+                            user = userViewModel.user!!
                         )
                     }
                 }

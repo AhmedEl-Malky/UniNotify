@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.domain.core.EventType
@@ -38,14 +39,16 @@ import com.malky.uninotify.presentation.composables.HeaderSection
 @Composable
 fun CategorizedEventsScreen(
     viewModel: CategorizedEventsViewModel,
-    deviceConfiguration: DeviceConfiguration
+    deviceConfiguration: DeviceConfiguration,
+    user: FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     CategorizedEventsScreenContent(
         state = state,
         eventType = viewModel.eventType,
         onAction = viewModel::onAction,
-        deviceConfiguration = deviceConfiguration
+        deviceConfiguration = deviceConfiguration,
+        user = user
     )
 }
 
@@ -58,7 +61,8 @@ private fun CategorizedEventsScreenContent(
     eventType: EventType,
     onAction: (CategorizedEventsAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current,
+    user: FirebaseUser
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -89,7 +93,8 @@ private fun CategorizedEventsScreenContent(
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
                         )
                     }
                     items(items = state.categorizedEvents) { event ->
@@ -132,7 +137,9 @@ private fun CategorizedEventsScreenContent(
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
+
                         )
                     }
                     items(items = state.categorizedEvents) { event ->
@@ -179,7 +186,9 @@ private fun CategorizedEventsScreenContent(
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
+
                         )
                     }
                     items(items = state.categorizedEvents) { event ->
@@ -202,12 +211,12 @@ private fun CategorizedEventsScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewCategorizedEventsScreen() {
-    UniNotifyTheme {
-        CategorizedEventsScreenContent(
-            state = CategorizedEventsState(),
-            eventType = EventType.Seminar,
-            onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
-        )
-    }
+//    UniNotifyTheme {
+//        CategorizedEventsScreenContent(
+//            state = CategorizedEventsState(),
+//            eventType = EventType.Seminar,
+//            onAction = {},
+//            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
+//        )
+//    }
 }

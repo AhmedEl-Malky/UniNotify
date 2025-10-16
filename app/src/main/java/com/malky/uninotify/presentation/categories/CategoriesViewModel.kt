@@ -11,10 +11,4 @@ class CategoriesViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow(CategoriesState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: CategoriesAction) {
-        when (action) {
-            else -> {}
-        }
-    }
-
 }

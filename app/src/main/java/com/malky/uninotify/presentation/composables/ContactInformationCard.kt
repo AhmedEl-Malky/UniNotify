@@ -25,12 +25,14 @@ import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.GraduationCap
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Mail
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.app.theme.Green
 
 @Composable
 fun ContactInformationCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    user: FirebaseUser
 ) {
     Card(
         modifier = modifier
@@ -81,14 +83,16 @@ fun ContactInformationCard(
                         text = "Email",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Text(
-                        text = "Ahmed.R.Elmalky@gmail.com",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurface.copy(
-                                alpha = 0.75f
+                    user.email?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurface.copy(
+                                    alpha = 0.75f
+                                )
                             )
                         )
-                    )
+                    }
                 }
             }
             Row(
@@ -132,6 +136,6 @@ fun ContactInformationCard(
 @Composable
 private fun PreviewContactInformationCard() {
     UniNotifyTheme {
-        ContactInformationCard()
+//        ContactInformationCard()
     }
 }

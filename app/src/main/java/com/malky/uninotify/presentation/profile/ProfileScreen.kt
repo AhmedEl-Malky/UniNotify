@@ -29,9 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.LogOut
 import com.composables.icons.lucide.Lucide
+import com.google.firebase.auth.FirebaseUser
+import com.malky.uninotify.app.navigation.Destination
+import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.ContactInformationCard
@@ -43,13 +47,17 @@ import com.malky.uninotify.presentation.composables.SettingsCard
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
-    deviceConfiguration: DeviceConfiguration
+    deviceConfiguration: DeviceConfiguration,
+    updateUser: () -> Unit,
+    user: FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     ProfileScreenContent(
         state = state,
-        onAction = viewModel::onAction,
-        deviceConfiguration = deviceConfiguration
+        onSignOut = viewModel::signOut,
+        deviceConfiguration = deviceConfiguration,
+        updateUser = updateUser,
+        user = user
     )
 }
 
@@ -59,9 +67,11 @@ private fun ProfileScreenContent(
         .fillMaxSize()
         .background(color = MaterialTheme.colorScheme.background),
     state: ProfileState,
-    onAction: (ProfileAction) -> Unit,
+    onSignOut: (() -> Unit) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-//    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current,
+    updateUser:() -> Unit,
+    user: FirebaseUser
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,7 +92,7 @@ private fun ProfileScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -93,17 +103,26 @@ private fun ProfileScreenContent(
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
                         )
                     }
                     item {
                         PersonalInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 16.dp),
+                            user = user
+
                         )
                     }
                     item {
                         ContactInformationCard(
-                            modifier = Modifier.padding(bottom = 16.dp).padding(horizontal = 16.dp)
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 16.dp),
+                            user = user
+
                         )
                     }
                     item {
@@ -115,7 +134,16 @@ private fun ProfileScreenContent(
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .padding(horizontal = 16.dp),
-                            onClick = {},
+                            onClick = {
+                                onSignOut {
+                                    updateUser()
+                                    navController.navigate(Destination.AuthenticationGraph) {
+                                        popUpTo(Destination.MainGraph) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
@@ -184,7 +212,7 @@ private fun ProfileScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-//                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -195,17 +223,22 @@ private fun ProfileScreenContent(
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
+
                         )
                     }
                     item {
                         PersonalInformationCard(
-                            modifier = Modifier.padding(start = 16.dp, end = 8.dp, bottom = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp, end = 8.dp, bottom = 16.dp),
+                            user = user
+
                         )
                     }
                     item {
                         ContactInformationCard(
-                            modifier = Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)
+                            modifier = Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp),
+                            user = user
                         )
                     }
                     item(span = { GridItemSpan(2) }) {
@@ -217,7 +250,16 @@ private fun ProfileScreenContent(
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .padding(horizontal = 16.dp),
-                            onClick = {},
+                            onClick = {
+                                onSignOut {
+                                    updateUser()
+                                    navController.navigate(Destination.AuthenticationGraph) {
+                                        popUpTo(Destination.MainGraph) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
@@ -250,11 +292,11 @@ private fun ProfileScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewProfileScreen() {
-    UniNotifyTheme {
-        ProfileScreenContent(
-            state = ProfileState(),
-            onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
-        )
-    }
+//    UniNotifyTheme {
+//        ProfileScreenContent(
+//            state = ProfileState(),
+//            onSignOut = {},
+//            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
+//        )
+//    }
 }

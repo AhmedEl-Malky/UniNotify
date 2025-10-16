@@ -3,13 +3,16 @@ package com.malky.uninotify.presentation.composables
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.CircularWavyProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,14 +47,17 @@ import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.authentication.login.LoginState
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
     state: LoginState,
-    onEmailChange:(String) -> Unit,
-    onEmailValidate:() -> Unit,
-    onPasswordChange:(String) -> Unit,
-    onSignIn:(() -> Unit) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onEmailValidate: () -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onSignIn: (() -> Unit) -> Unit,
+    onSignInWithGoogle: (() -> Unit) -> Unit,
+    updateUser:() -> Unit,
     navController: NavHostController
 ) {
     val focusRequester = LocalFocusManager.current
@@ -155,9 +161,10 @@ fun LoginForm(
                 .padding(top = 12.dp),
             onClick = {
                 focusRequester.clearFocus()
-                onSignIn{
-                    navController.navigate(Destination.MainGraph){
-                        popUpTo(Destination.AuthenticationGraph) { 
+                onSignIn {
+                    updateUser()
+                    navController.navigate(Destination.MainGraph) {
+                        popUpTo(Destination.AuthenticationGraph) {
                             inclusive = true
                         }
                     }
@@ -165,10 +172,10 @@ fun LoginForm(
             },
         ) {
             if (state.isLoading)
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
+                CircularWavyProgressIndicator(
+                    modifier = Modifier.size(32.dp),
                     color = MaterialTheme.colorScheme.onPrimary,
-                    strokeWidth = 4.dp
+                    wavelength = 8.dp,
                 )
             else
                 Text(
@@ -202,6 +209,44 @@ fun LoginForm(
                     append("Signup")
                 }
             })
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HorizontalDivider(
+                modifier = Modifier.weight(1f),
+                thickness = 0.8.dp,
+                color = MaterialTheme.colorScheme.outline
+            )
+            Text(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                text = "or",
+                style = MaterialTheme.typography.bodyLarge
+            )
+            HorizontalDivider(
+                modifier = Modifier.weight(1f),
+                thickness = 0.8.dp,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+        SignInWithGoogleButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            isLoading = state.isGoogleSignInLoading,
+            onClick = {
+                onSignInWithGoogle {
+                    updateUser()
+                    navController.navigate(Destination.MainGraph) {
+                        popUpTo(Destination.AuthenticationGraph) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+        )
     }
 }
 

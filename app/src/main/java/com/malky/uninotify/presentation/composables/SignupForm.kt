@@ -44,6 +44,7 @@ fun SignupForm(
     modifier: Modifier = Modifier,
     state: SignupState,
     onAction: (SignupAction) -> Unit,
+    updateUser:() -> Unit,
     navController: NavHostController
 ) {
     val focusRequester = LocalFocusManager.current
@@ -320,6 +321,7 @@ fun SignupForm(
                 onAction(
                     SignupAction.OnSignup(
                         onSuccess = {
+                            updateUser()
                             navController.navigate(Destination.MainGraph){
                                 popUpTo(Destination.AuthenticationGraph){
                                     inclusive = true

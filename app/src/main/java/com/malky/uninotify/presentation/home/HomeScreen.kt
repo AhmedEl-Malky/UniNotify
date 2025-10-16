@@ -41,6 +41,7 @@ import com.composables.icons.lucide.BookOpen
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.User
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
@@ -53,13 +54,15 @@ import com.malky.uninotify.presentation.composables.NavigationCard
 @Composable
 fun HomeScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    user : FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreenContent(
         state = state,
         onAction = viewModel::onAction,
-        deviceConfiguration = deviceConfiguration
+        deviceConfiguration = deviceConfiguration,
+        user = user
     )
 }
 
@@ -68,7 +71,8 @@ private fun HomeScreenContent(
     state: HomeState,
     onAction: (HomeAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current,
+    user: FirebaseUser
 ) {
     val navigationList = remember {
         mutableStateMapOf(
@@ -96,7 +100,8 @@ private fun HomeScreenContent(
                             subtitle = "Stay updated with campus events",
                             extraContent = {
                                 EventsCountSection(upcomingEventsCount = 4, savedEventsCount = 0)
-                            }
+                            },
+                            profilePic = user.photoUrl.toString()
                         )
                     }
                     item {
@@ -225,7 +230,8 @@ private fun HomeScreenContent(
                                         upcomingEventsCount = 4,
                                         savedEventsCount = 0
                                     )
-                                }
+                                },
+                                profilePic = user.photoUrl.toString()
                             )
                         }
                         item(span = { GridItemSpan(2) }) {
@@ -262,12 +268,12 @@ private fun HomeScreenContent(
 @Preview(showSystemUi = true, device = "spec:parent=pixel_9,orientation=portrait")
 @Composable
 private fun PreviewHomeScreen() {
-    UniNotifyTheme {
-        HomeScreenContent(
-            state = HomeState(),
-            onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
-        )
-    }
+//    UniNotifyTheme {
+//        HomeScreenContent(
+//            state = HomeState(),
+//            onAction = {},
+//            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
+//        )
+//    }
 }
 

@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
@@ -36,12 +37,14 @@ import com.malky.uninotify.presentation.composables.HeaderSection
 @Composable
 fun CategoriesScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: CategoriesViewModel
+    viewModel: CategoriesViewModel,
+    user: FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     CategoriesScreenContent(
         state = state,
-        deviceConfiguration = deviceConfiguration
+        deviceConfiguration = deviceConfiguration,
+        user = user
     )
 }
 
@@ -49,7 +52,8 @@ fun CategoriesScreen(
 private fun CategoriesScreenContent(
     state: CategoriesState,
     deviceConfiguration: DeviceConfiguration,
-    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current,
+    user: FirebaseUser
 ) {
     val widthFraction = remember {
         when (deviceConfiguration) {
@@ -84,7 +88,8 @@ private fun CategoriesScreenContent(
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                }
+                },
+                profilePic = user.photoUrl.toString()
             )
         }
     ) { innerPadding ->
@@ -124,10 +129,10 @@ private fun CategoriesScreenContent(
 @Preview(device = "spec:parent=pixel_tablet,orientation=landscape")
 @Composable
 private fun PreviewCategoriesScreen() {
-    UniNotifyTheme {
-        CategoriesScreenContent(
-            state = CategoriesState(),
-            deviceConfiguration = DeviceConfiguration.TABLET_LANDSCAPE
-        )
-    }
+//    UniNotifyTheme {
+//        CategoriesScreenContent(
+//            state = CategoriesState(),
+//            deviceConfiguration = DeviceConfiguration.TABLET_LANDSCAPE
+//        )
+//    }
 }

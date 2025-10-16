@@ -43,13 +43,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignupScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: SignupViewModel
+    viewModel: SignupViewModel,
+    updateUser:() -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     SignupScreenContent(
         deviceConfiguration = deviceConfiguration,
         state = state,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        updateUser = updateUser
     )
 }
 
@@ -64,6 +66,7 @@ private fun SignupScreenContent(
     deviceConfiguration: DeviceConfiguration,
     state: SignupState,
     onAction: (SignupAction) -> Unit,
+    updateUser:() -> Unit,
     navController: NavHostController = LocalNavController.current
 ) {
     val snackBarHost = remember{ SnackbarHostState() }
@@ -123,7 +126,8 @@ private fun SignupScreenContent(
                             modifier = Modifier.fillMaxWidth(),
                             navController = navController,
                             state = state,
-                            onAction = onAction
+                            onAction = onAction,
+                            updateUser = updateUser
                         )
                     }
                 }
@@ -144,7 +148,8 @@ private fun SignupScreenContent(
                             modifier = Modifier.weight(1f),
                             navController = navController,
                             state = state,
-                            onAction = onAction
+                            onAction = onAction,
+                            updateUser = updateUser
                         )
                     }
                 }
@@ -171,7 +176,8 @@ private fun SignupScreenContent(
                             modifier = Modifier.widthIn(max = 540.dp),
                             navController = navController,
                             state = state,
-                            onAction = onAction
+                            onAction = onAction,
+                            updateUser = updateUser
                         )
                     }
                 }

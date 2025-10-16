@@ -36,13 +36,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.graphics.shapes.RoundedPolygon
 import coil3.compose.AsyncImage
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.R
-import com.malky.uninotify.app.navigation.LocalUser
 import com.malky.uninotify.app.theme.UniNotifyTheme
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -53,6 +51,7 @@ fun HeaderSection(
     subtitle: String?,
     navigationIcon: @Composable () -> Unit = {},
     extraContent: @Composable () -> Unit = {},
+    profilePic: String?
 ) {
     Column(
         modifier = modifier
@@ -101,18 +100,13 @@ fun HeaderSection(
                     )
                 }
             }
-            var isImageFailed by remember { mutableStateOf(false) }
             AsyncImage(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(MaterialShapes.Cookie12Sided.toShape())
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(if(isImageFailed) 10.dp else 0.dp),
-                model = LocalUser.current?.photoUrl,
-                error = painterResource(R.drawable.blue_logo),
-                onError = {
-                    isImageFailed = true
-                },
+                    .background(MaterialTheme.colorScheme.background),
+                model = profilePic,
+                error = painterResource(R.drawable.avatar),
                 contentDescription = "Logo",
             )
         }
@@ -158,6 +152,7 @@ private fun PreviewHeaderSection() {
             },
             title = "Good Morning!",
             subtitle = "Stay updated with campus events",
+            profilePic = ""
         )
     }
 }

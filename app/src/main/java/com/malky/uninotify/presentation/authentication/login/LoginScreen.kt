@@ -43,7 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     deviceConfiguration: DeviceConfiguration,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
+    updateUser:() -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LoginScreenContent(
@@ -53,7 +54,8 @@ fun LoginScreen(
         onPasswordChange = viewModel::onPasswordChange,
         onSignIn = viewModel::onSignIn,
         onSignInWithGoogle = viewModel::onSignInWithGoogle,
-        deviceConfiguration = deviceConfiguration
+        deviceConfiguration = deviceConfiguration,
+        updateUser = updateUser
     )
 }
 
@@ -71,6 +73,7 @@ private fun LoginScreenContent(
     onPasswordChange:(String) -> Unit,
     onSignIn:(() -> Unit) -> Unit,
     onSignInWithGoogle:(() -> Unit) -> Unit,
+    updateUser:() -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
@@ -135,6 +138,7 @@ private fun LoginScreenContent(
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
                             onSignInWithGoogle = onSignInWithGoogle,
+                            updateUser = updateUser,
                             navController = navController
                         )
                     }
@@ -160,7 +164,8 @@ private fun LoginScreenContent(
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
                             onSignInWithGoogle = onSignInWithGoogle,
-                            navController = navController
+                            navController = navController,
+                            updateUser = updateUser
                         )
                     }
                 }
@@ -191,6 +196,7 @@ private fun LoginScreenContent(
                             onPasswordChange = onPasswordChange,
                             onSignIn = onSignIn,
                             onSignInWithGoogle = onSignInWithGoogle,
+                            updateUser = updateUser,
                             navController = navController
                         )
                     }

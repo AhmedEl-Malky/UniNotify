@@ -57,6 +57,7 @@ fun LoginForm(
     onPasswordChange: (String) -> Unit,
     onSignIn: (() -> Unit) -> Unit,
     onSignInWithGoogle: (() -> Unit) -> Unit,
+    updateUser:() -> Unit,
     navController: NavHostController
 ) {
     val focusRequester = LocalFocusManager.current
@@ -161,6 +162,7 @@ fun LoginForm(
             onClick = {
                 focusRequester.clearFocus()
                 onSignIn {
+                    updateUser()
                     navController.navigate(Destination.MainGraph) {
                         popUpTo(Destination.AuthenticationGraph) {
                             inclusive = true
@@ -236,6 +238,7 @@ fun LoginForm(
             isLoading = state.isGoogleSignInLoading,
             onClick = {
                 onSignInWithGoogle {
+                    updateUser()
                     navController.navigate(Destination.MainGraph) {
                         popUpTo(Destination.AuthenticationGraph) {
                             inclusive = true

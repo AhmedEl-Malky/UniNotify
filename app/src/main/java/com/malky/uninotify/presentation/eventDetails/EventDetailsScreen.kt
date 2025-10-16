@@ -39,6 +39,7 @@ import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Plus
+import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
@@ -51,13 +52,15 @@ import com.malky.uninotify.presentation.composables.SecondaryButton
 @Composable
 fun EventDetailsScreen(
     viewModel: EventDetailsViewModel,
-    deviceConfiguration: DeviceConfiguration
+    deviceConfiguration: DeviceConfiguration,
+    user: FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     EventDetailsScreenContent(
         state = state,
         onAction = viewModel::onAction,
-        deviceConfiguration = deviceConfiguration
+        deviceConfiguration = deviceConfiguration,
+        user = user
     )
 }
 
@@ -70,7 +73,8 @@ private fun EventDetailsScreenContent(
     state: EventDetailsState,
     onAction: (EventDetailsAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
-    navController: NavHostController = LocalNavController.current
+    navController: NavHostController = LocalNavController.current,
+    user: FirebaseUser
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -124,6 +128,7 @@ private fun EventDetailsScreenContent(
                                     )
                                 }
                             },
+                            profilePic = user.photoUrl.toString()
                         )
                     }
                     item {
@@ -258,6 +263,7 @@ private fun EventDetailsScreenContent(
                                     )
                                 }
                             },
+                            profilePic = user.photoUrl.toString()
                         )
                     }
                     item {
@@ -343,11 +349,11 @@ private fun EventDetailsScreenContent(
 @Preview(device = "spec:parent=pixel_9,orientation=landscape")
 @Composable
 private fun PreviewEventDetailsScreen() {
-    UniNotifyTheme {
-        EventDetailsScreenContent(
-            state = EventDetailsState(),
-            onAction = {},
-            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
-        )
-    }
+//    UniNotifyTheme {
+//        EventDetailsScreenContent(
+//            state = EventDetailsState(),
+//            onAction = {},
+//            deviceConfiguration = DeviceConfiguration.MOBILE_LANDSCAPE
+//        )
+//    }
 }

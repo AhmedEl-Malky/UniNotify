@@ -6,12 +6,14 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.NoCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.userProfileChangeRequest
 import com.malky.uninotify.BuildConfig
 import com.malky.uninotify.domain.authentication.AuthenticationService
 import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
@@ -31,12 +33,19 @@ class AuthenticationServiceImpl @Inject constructor(
     private val credentialManager = CredentialManager.create(context)
 
     override suspend fun signUp(
+        firstName : String,
+        lastName : String,
         email: String,
         password: String,
     ): Response<FirebaseUser, ErrorType> {
-        return authenticate {
+        val response =  authenticate {
             auth.createUserWithEmailAndPassword(email, password).await()
         }
+        if(response is Response.Success)
+            response.data.updateProfile(
+                userProfileChangeRequest { displayName = "$firstName $lastName" }
+            ).await()
+        return response
     }
 
     override suspend fun signIn(
@@ -60,6 +69,8 @@ class AuthenticationServiceImpl @Inject constructor(
             Response.Success(getCredentialRequest())
         }catch (e: NoCredentialException){
             Response.Error(AuthenticationErrors.No_Account)
+        } catch (e: GetCredentialCancellationException){
+            Response.Error(AuthenticationErrors.Invalid_Credentials)
         }
         return when(result){
             is Response.Success -> handleSignIn(result.data)

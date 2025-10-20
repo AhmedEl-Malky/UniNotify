@@ -19,5 +19,5 @@
     <string name="NotFound">Not Found</string>
     <string name="SerializationError">Serialization Error</string>
     <string name="UnknownError">Unknown error has occurred</string>
-    <string name="NoAccount">Can\'t find account on the device , add or create new one</string>
+    <string name="NoAccount">Can\'t find account on the device , add or create one</string>
 </resources>

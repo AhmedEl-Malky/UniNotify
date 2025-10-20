@@ -35,6 +35,8 @@ import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.HeaderSection
+import com.malky.uninotify.presentation.format
+import com.malky.uninotify.presentation.formatTime
 
 @Composable
 fun CategorizedEventsScreen(
@@ -104,8 +106,8 @@ private fun CategorizedEventsScreenContent(
                             title = event.title,
                             description = event.description,
                             eventType = event.type,
-                            date = event.date,
-                            time = event.time
+                            date = event.date.format(),
+                            time = event.date.formatTime()
                         )
                     }
                 }
@@ -149,8 +151,8 @@ private fun CategorizedEventsScreenContent(
                             title = event.title,
                             description = event.description,
                             eventType = event.type,
-                            date = event.date,
-                            time = event.time
+                            date = event.date.format(),
+                            time = event.date.formatTime()
                         )
                     }
                 }
@@ -198,8 +200,8 @@ private fun CategorizedEventsScreenContent(
                             title = event.title,
                             description = event.description,
                             eventType = event.type,
-                            date = event.date,
-                            time = event.time
+                            date = event.date.format(),
+                            time = event.date.formatTime()
                         )
                     }
                 }

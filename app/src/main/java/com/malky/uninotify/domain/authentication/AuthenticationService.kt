@@ -7,6 +7,8 @@ import com.malky.uninotify.utils.Response
 
 interface AuthenticationService {
     suspend fun signUp(
+        firstName: String,
+        lastName: String,
         email: String,
         password: String,
     ): Response<FirebaseUser, ErrorType>

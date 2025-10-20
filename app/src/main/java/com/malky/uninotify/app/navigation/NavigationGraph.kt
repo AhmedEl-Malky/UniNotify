@@ -90,7 +90,7 @@ fun NavigationGraph(
                             deviceConfiguration = deviceConfiguration,
                             viewModel = hiltViewModel(),
                             updateUser = userViewModel::updateUser,
-                            user = userViewModel.user!!
+                            user = userViewModel.user
                         )
                     }
                     composable<Destination.CategorizedEvents> {

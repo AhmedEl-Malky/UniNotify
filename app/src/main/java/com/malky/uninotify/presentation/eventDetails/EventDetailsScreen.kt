@@ -48,6 +48,8 @@ import com.malky.uninotify.presentation.composables.EventInformationCard
 import com.malky.uninotify.presentation.composables.HeaderSection
 import com.malky.uninotify.presentation.composables.PrimaryButton
 import com.malky.uninotify.presentation.composables.SecondaryButton
+import com.malky.uninotify.presentation.format
+import com.malky.uninotify.presentation.formatTime
 
 @Composable
 fun EventDetailsScreen(
@@ -143,8 +145,8 @@ private fun EventDetailsScreenContent(
                     item {
                         EventDetailsCard(
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            date = state.event.date,
-                            time = state.event.time,
+                            date = state.event.date.format(),
+                            time = state.event.date.formatTime(),
                             venue = state.event.location
                         )
                     }
@@ -276,8 +278,8 @@ private fun EventDetailsScreenContent(
                     item {
                         EventDetailsCard(
                             modifier = Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp),
-                            date = state.event.date,
-                            time = state.event.time,
+                            date = state.event.date.format(),
+                            time = state.event.date.formatTime(),
                             venue = state.event.location
                         )
                     }

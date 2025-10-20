@@ -7,9 +7,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.malky.uninotify.data.remote.AuthenticationServiceImpl
 import com.malky.uninotify.data.remote.EventsServiceImpl
-import com.malky.uninotify.domain.EventsService
+import com.malky.uninotify.data.repositories.EventsRepositoryImpl
+import com.malky.uninotify.domain.data.EventsService
 import com.malky.uninotify.domain.authentication.AuthenticationService
 import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
+import com.malky.uninotify.domain.data.EventsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +42,12 @@ object DataModule {
     fun provideThirdPartyAuthentication(auth: FirebaseAuth,@ApplicationContext context: Context): ThirdPartyAuthentication = AuthenticationServiceImpl(auth = auth,context = context)
 
 
-//    @Provides
-//    @Singleton
-//    fun providesEventsService(dp: FirebaseFirestore): EventsService = EventsServiceImpl(dp = dp)
+    @Provides
+    @Singleton
+    fun providesEventsService(dp: FirebaseFirestore): EventsService = EventsServiceImpl(dp = dp)
+
+    @Provides
+    @Singleton
+    fun providesEventsRepository(service: EventsService): EventsRepository = EventsRepositoryImpl(service = service)
+
 }

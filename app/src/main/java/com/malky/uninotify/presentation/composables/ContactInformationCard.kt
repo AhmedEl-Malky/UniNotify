@@ -32,7 +32,7 @@ import com.malky.uninotify.app.theme.Green
 @Composable
 fun ContactInformationCard(
     modifier: Modifier = Modifier,
-    user: FirebaseUser
+    user: FirebaseUser?
 ) {
     Card(
         modifier = modifier
@@ -83,7 +83,7 @@ fun ContactInformationCard(
                         text = "Email",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    user.email?.let {
+                    user?.email?.let {
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodyMedium.copy(

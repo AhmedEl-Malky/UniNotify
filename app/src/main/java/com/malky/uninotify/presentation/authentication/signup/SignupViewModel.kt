@@ -201,8 +201,10 @@ class SignupViewModel @Inject constructor(
                     error = null
                 )
             }
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 authService.signUp(
+                    firstName = _state.value.firstName,
+                    lastName = _state.value.lastName,
                     email = _state.value.email,
                     password = _state.value.password
                 ).onSuccess { user ->

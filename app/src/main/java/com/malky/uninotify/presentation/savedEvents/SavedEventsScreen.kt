@@ -106,8 +106,8 @@ private fun SavedEventsScreenContent(
                             title = event.title,
                             description = event.description,
                             eventType = event.type,
-                            date = event.date,
-                            time = event.time
+                            date = event.date.month.toString(),
+                            time = event.date.time.toString()
                         )
                     }
                 }
@@ -156,8 +156,8 @@ private fun SavedEventsScreenContent(
                             title = event.title,
                             description = event.description,
                             eventType = event.type,
-                            date = event.date,
-                            time = event.time
+                            date = event.date.month.toString(),
+                            time = event.date.time.toString()
                         )
                     }
                 }

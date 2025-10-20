@@ -6,7 +6,6 @@ enum class AuthenticationErrors : ErrorType {
     Something_Went_Wrong,
     Invalid_Credentials,
     User_Not_Found,
-
     No_Account,
     Email_Already_Exists;
 

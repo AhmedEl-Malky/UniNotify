@@ -43,7 +43,7 @@ import com.malky.uninotify.app.theme.UniNotifyTheme
 @Composable
 fun PersonalInformationCard(
     modifier: Modifier = Modifier,
-    user: FirebaseUser
+    user: FirebaseUser?
 ) {
     Card(
         modifier = modifier
@@ -78,7 +78,7 @@ fun PersonalInformationCard(
                         color = MaterialTheme.colorScheme.primary,
                         shape = MaterialShapes.Cookie12Sided.toShape()
                     ),
-                model = user.photoUrl,
+                model = user?.photoUrl,
                 error = painterResource(R.drawable.avatar),
                 onError = {
                     isImageFailed = true
@@ -105,7 +105,7 @@ fun PersonalInformationCard(
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                user.displayName?.let {
+                user?.displayName?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W700)

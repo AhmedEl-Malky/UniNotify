@@ -49,7 +49,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel,
     deviceConfiguration: DeviceConfiguration,
     updateUser: () -> Unit,
-    user: FirebaseUser
+    user: FirebaseUser?
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     ProfileScreenContent(
@@ -71,7 +71,7 @@ private fun ProfileScreenContent(
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current,
     updateUser:() -> Unit,
-    user: FirebaseUser
+    user: FirebaseUser?
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -104,7 +104,7 @@ private fun ProfileScreenContent(
                                     )
                                 }
                             },
-                            profilePic = user.photoUrl.toString()
+                            profilePic = user?.photoUrl.toString()
                         )
                     }
                     item {
@@ -224,7 +224,7 @@ private fun ProfileScreenContent(
                                     )
                                 }
                             },
-                            profilePic = user.photoUrl.toString()
+                            profilePic = user?.photoUrl.toString()
 
                         )
                     }

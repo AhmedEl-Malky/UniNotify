@@ -2,18 +2,22 @@ package com.malky.uninotify.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +26,10 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LoadingIndicatorDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,6 +39,8 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,18 +54,21 @@ import com.composables.icons.lucide.User
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.EventsCountSection
 import com.malky.uninotify.presentation.composables.HeaderSection
 import com.malky.uninotify.presentation.composables.NavigationCard
+import com.malky.uninotify.presentation.format
+import com.malky.uninotify.presentation.formatTime
+import com.malky.uninotify.presentation.getMonthName
+import com.malky.uninotify.presentation.year
 
 @Composable
 fun HomeScreen(
     deviceConfiguration: DeviceConfiguration,
     viewModel: HomeViewModel,
-    user : FirebaseUser
+    user: FirebaseUser
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreenContent(
@@ -66,6 +79,7 @@ fun HomeScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun HomeScreenContent(
     state: HomeState,
@@ -137,27 +151,48 @@ private fun HomeScreenContent(
                             }
                         }
                     }
-                    item {
-                        Text(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .paddingFromBaseline(bottom = 16.dp),
-                            text = "Upcoming Events",
-                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.W700)
-                        )
-                    }
-                    items(items = state.eventsList) { event ->
-                        EventCard(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            onClick = {
-                                navController.navigate(Destination.EventDetails)
-                            },
-                            title = event.title,
-                            description = event.description,
-                            eventType = event.type,
-                            date = event.date,
-                            time = event.time
-                        )
+                    if (!state.isLoading) {
+                        item {
+                            Text(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .paddingFromBaseline(bottom = 16.dp),
+                                text = "Upcoming Events",
+                                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.W700)
+                            )
+                        }
+                        items(items = state.events) { event ->
+                            EventCard(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                onClick = {
+                                    navController.navigate(Destination.EventDetails)
+                                },
+                                title = event.title,
+                                description = event.description,
+                                eventType = event.type,
+                                date = event.date.format(),
+                                time = event.date.formatTime()
+                            )
+                        }
+                    } else {
+                        item {
+                            Spacer(modifier = Modifier.height(50.dp))
+                        }
+                        item {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                LoadingIndicator(
+                                    modifier = Modifier
+                                        .size(58.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        .padding(6.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -243,7 +278,7 @@ private fun HomeScreenContent(
                                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.W700)
                             )
                         }
-                        items(items = state.eventsList) { event ->
+                        items(items = state.events) { event ->
                             EventCard(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -254,8 +289,8 @@ private fun HomeScreenContent(
                                 title = event.title,
                                 description = event.description,
                                 eventType = event.type,
-                                date = event.date,
-                                time = event.time
+                                date = "${event.date.month}",
+                                time = "${event.date.time}"
                             )
                         }
                     }

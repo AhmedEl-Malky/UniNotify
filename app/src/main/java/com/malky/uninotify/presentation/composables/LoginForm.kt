@@ -173,7 +173,7 @@ fun LoginForm(
         ) {
             if (state.isLoading)
                 CircularWavyProgressIndicator(
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(24.dp),
                     color = MaterialTheme.colorScheme.onPrimary,
                     wavelength = 8.dp,
                 )

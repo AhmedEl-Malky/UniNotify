@@ -1,6 +1,6 @@
 [versions]
-agp = "8.11.1"
-kotlin = "2.2.10"
+agp = "8.11.2"
+kotlin = "2.2.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -26,8 +26,9 @@ googleid = "1.1.1"
 material3 = "1.5.0-alpha04"
 coil3 = "3.3.0"
 firebaseFirestore = "26.0.2"
-
-
+room = "2.8.3"
+ksp = "2.2.10-2.0.2"
+datastore = "1.1.7"
 
 
 [libraries]
@@ -86,6 +87,14 @@ androidx-credentials-play-services-auth = { group = "androidx.credentials", name
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
+#Room database
+room = {group = "androidx.room" , name = "room-runtime" , version.ref = "room"}
+room-compiler = {group = "androidx.room" , name = "room-compiler" , version.ref = "room"}
+room-ktx = {group = "androidx.room" , name = "room-ktx" , version.ref = "room"}
+
+datastore-preferences = {group = "androidx.datastore" , name = "datastore-preferences" , version.ref = "datastore"}
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -95,6 +104,7 @@ kotlin-kapt = { id = "kotlin-kapt"}
 secret-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretGradle" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
 
 [bundles]
 ktor = [
@@ -112,4 +122,8 @@ hilt = [
 coil = [
     "coil-compose",
     "coil-network-okhttp"
+]
+room = [
+    "room",
+    "room-ktx"
 ]

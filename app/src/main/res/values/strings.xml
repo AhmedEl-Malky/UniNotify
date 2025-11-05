@@ -20,4 +20,7 @@
     <string name="SerializationError">Serialization Error</string>
     <string name="UnknownError">Unknown error has occurred</string>
     <string name="NoAccount">Can\'t find account on the device , add or create one</string>
+    <string name="LocalDiskIOError">Failed to access local storage. Please check your device\'s storage and try again.</string>
+    <string name="LocalDatabaseCorrupt">The local data is corrupted. Please try clearing the app data or reinstalling the app.</string>
+    <string name="LocalQueryFailed">An error occurred while saving your data. Please restart the app and try again.</string>
 </resources>

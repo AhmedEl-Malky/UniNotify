@@ -11,6 +11,7 @@ data class EventDetailsState(
         description = "Learn about the latest trends in AI and ML from industry experts.",
         type = EventType.Seminar,
         date = Date(),
-        location = "Seminar Hall A"
+        location = "Seminar Hall A",
+        isSaved = false
     ),
 )

@@ -7,5 +7,6 @@ data class Event(
     val description: String,
     val type: EventType,
     val date: Date,
-    val location: String
+    val location: String,
+    val isSaved: Boolean
 )

@@ -1,28 +1,50 @@
 package com.malky.uninotify.utils
 
+import android.database.sqlite.SQLiteConstraintException
+import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.database.sqlite.SQLiteDiskIOException
 import android.util.Log
+import androidx.sqlite.SQLiteException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import java.lang.Exception
 
 suspend inline fun <T> retrieveFromFireStore(
     action: suspend () -> T
-): Response<T, RemoteDataErrors> {
+): Response<T, DataErrors.Remote> {
     return try {
         Response.Success(action())
     } catch (e: FirebaseFirestoreException) {
-        Log.e("FirestoreWrapper", "Unexpected error: ${e.javaClass.simpleName} - ${e.message}", e)
         when (e.code) {
-            FirebaseFirestoreException.Code.DEADLINE_EXCEEDED -> Response.Error(RemoteDataErrors.REQUEST_TIMEOUT)
-            FirebaseFirestoreException.Code.NOT_FOUND -> Response.Error(RemoteDataErrors.NOT_FOUND)
-            FirebaseFirestoreException.Code.INTERNAL -> Response.Error(RemoteDataErrors.SERVER)
-            FirebaseFirestoreException.Code.RESOURCE_EXHAUSTED -> Response.Error(RemoteDataErrors.TOO_MANY_REQUESTS)
-            FirebaseFirestoreException.Code.UNAUTHENTICATED -> Response.Error(RemoteDataErrors.UNAUTHORIZED)
-            FirebaseFirestoreException.Code.CANCELLED -> Response.Error(RemoteDataErrors.UNKNOWN)
-            FirebaseFirestoreException.Code.UNKNOWN -> Response.Error(RemoteDataErrors.UNKNOWN)
-            else -> Response.Error(RemoteDataErrors.UNKNOWN)
+            FirebaseFirestoreException.Code.DEADLINE_EXCEEDED -> Response.Error(DataErrors.Remote.REQUEST_TIMEOUT)
+            FirebaseFirestoreException.Code.NOT_FOUND -> Response.Error(DataErrors.Remote.NOT_FOUND)
+            FirebaseFirestoreException.Code.INTERNAL -> Response.Error(DataErrors.Remote.SERVER)
+            FirebaseFirestoreException.Code.RESOURCE_EXHAUSTED -> Response.Error(DataErrors.Remote.TOO_MANY_REQUESTS)
+            FirebaseFirestoreException.Code.UNAUTHENTICATED -> Response.Error(DataErrors.Remote.UNAUTHORIZED)
+            FirebaseFirestoreException.Code.CANCELLED -> Response.Error(DataErrors.Remote.UNKNOWN)
+            FirebaseFirestoreException.Code.UNKNOWN -> Response.Error(DataErrors.Remote.UNKNOWN)
+            else -> Response.Error(DataErrors.Remote.UNKNOWN)
         }
     } catch (e: Exception) {
-        Log.e("FirestoreWrapper", "Unexpected error: ${e.javaClass.simpleName} - ${e.message}", e)
-        Response.Error(RemoteDataErrors.UNKNOWN)
+        Response.Error(DataErrors.Remote.UNKNOWN)
+    }
+}
+
+suspend inline fun <T> query(
+    action: suspend () -> T
+): Response<T, DataErrors.Local> {
+    return try {
+        Response.Success(action())
+    }catch (e: SQLiteDiskIOException){
+        Response.Error(DataErrors.Local.DISK_IO_ERROR)
+    }catch (e: SQLiteDatabaseCorruptException){
+        Response.Error(DataErrors.Local.DATABASE_CORRUPT)
+    }catch (e: SQLiteConstraintException){
+        Response.Error(DataErrors.Local.QUERY_FAILED)
+    }
+    catch (e: SQLiteException){
+        Response.Error(DataErrors.Local.UNKNOWN)
+    }
+    catch (e: Exception){
+        Response.Error(DataErrors.Local.UNKNOWN)
     }
 }

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -78,4 +79,7 @@ dependencies {
     implementation(libs.google.fonts)
     implementation(libs.lucide.icons)
     implementation(libs.material3.adaptive)
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+    implementation(libs.datastore.preferences)
 }

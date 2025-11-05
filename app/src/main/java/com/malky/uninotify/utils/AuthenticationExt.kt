@@ -17,11 +17,11 @@ suspend inline fun authenticate(
         val result = action()
         Response.Success(result.user!!)
     } catch (e: SocketTimeoutException) {
-        Response.Error(RemoteDataErrors.REQUEST_TIMEOUT)
+        Response.Error(DataErrors.Remote.REQUEST_TIMEOUT)
     } catch (e: IOException) {
-        Response.Error(RemoteDataErrors.NO_INTERNET)
+        Response.Error(DataErrors.Remote.NO_INTERNET)
     } catch (e: FirebaseNetworkException) {
-        Response.Error(RemoteDataErrors.NO_INTERNET)
+        Response.Error(DataErrors.Remote.NO_INTERNET)
     } catch (e: FirebaseAuthInvalidCredentialsException) {
         Response.Error(AuthenticationErrors.Invalid_Credentials)
     } catch (e: FirebaseAuthInvalidUserException) {
@@ -29,6 +29,6 @@ suspend inline fun authenticate(
     } catch (e: FirebaseAuthUserCollisionException) {
         Response.Error(AuthenticationErrors.Email_Already_Exists)
     }catch (e: Exception) {
-        Response.Error(RemoteDataErrors.UNKNOWN)
+        Response.Error(DataErrors.Remote.UNKNOWN)
     }
 }

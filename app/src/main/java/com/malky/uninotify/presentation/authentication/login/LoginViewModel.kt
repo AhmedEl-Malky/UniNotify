@@ -63,22 +63,27 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onSignIn(onSuccess: () -> Unit) {
+        _state.update {
+            it.copy(
+                error = null
+            )
+        }
         onEmailValidate()
         if (_state.value.emailValidation == null) {
-            _state.update {
-                it.copy(
-                    isLoading = true,
-                    error = null
-                )
-            }
             viewModelScope.launch(Dispatchers.IO) {
+                _state.update {
+                    it.copy(
+                        isLoading = true,
+                        error = null
+                    )
+                }
                 authService.signIn(
                     email = _state.value.email,
                     password = _state.value.password
                 ).onSuccess {
                     _state.update {
                         it.copy(
-                            isGoogleSignInLoading = false,
+                            isLoading = false,
                             error = null
                         )
                     }
@@ -86,7 +91,7 @@ class LoginViewModel @Inject constructor(
                 }.onError { error ->
                     _state.update {
                         it.copy(
-                            isGoogleSignInLoading = false,
+                            isLoading = false,
                             error = error.toUiText()
                         )
                     }

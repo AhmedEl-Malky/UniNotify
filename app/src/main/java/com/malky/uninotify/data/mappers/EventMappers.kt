@@ -1,6 +1,7 @@
 package com.malky.uninotify.data.mappers
 
 import com.google.firebase.firestore.DocumentSnapshot
+import com.malky.uninotify.data.local.database.entities.EventEntity
 import com.malky.uninotify.data.remote.dto.EventDTO
 import com.malky.uninotify.domain.core.Event
 import com.malky.uninotify.domain.core.EventType
@@ -15,18 +16,24 @@ fun DocumentSnapshot.toEventDTO(): EventDTO {
     )
 }
 
-fun EventDTO.toEvent(): Event {
-    val type = when (this.type) {
-        "Seminar" -> EventType.Seminar
-        "Fest" -> EventType.Fest
-        "Exam" -> EventType.Exam
-        else -> EventType.Notice
-    }
+fun EventDTO.toEventEntity(): EventEntity {
+    return EventEntity(
+        title = this.title,
+        description = this.description,
+        type = EventType.valueOf(this.type),
+        location = this.location,
+        date = this.date.toDate(),
+        isSaved = false
+    )
+}
+
+fun EventEntity.toEvent() : Event{
     return Event(
-    title = this.title,
-    description = this.description,
-    type = type,
-    location = this.location,
-    date = this.date.toDate(),
+        title = this.title,
+        description = this.description,
+        type = this.type,
+        location = this.location,
+        date = this.date,
+        isSaved = this.isSaved
     )
 }

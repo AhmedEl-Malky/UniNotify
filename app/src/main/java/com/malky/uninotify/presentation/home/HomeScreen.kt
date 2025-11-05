@@ -73,7 +73,6 @@ fun HomeScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreenContent(
         state = state,
-        onAction = viewModel::onAction,
         deviceConfiguration = deviceConfiguration,
         user = user
     )
@@ -83,7 +82,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     state: HomeState,
-    onAction: (HomeAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current,
     user: FirebaseUser
@@ -306,7 +304,6 @@ private fun PreviewHomeScreen() {
 //    UniNotifyTheme {
 //        HomeScreenContent(
 //            state = HomeState(),
-//            onAction = {},
 //            deviceConfiguration = DeviceConfiguration.MOBILE_PORTRAIT
 //        )
 //    }

@@ -18,8 +18,8 @@ import com.malky.uninotify.BuildConfig
 import com.malky.uninotify.domain.authentication.AuthenticationService
 import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
 import com.malky.uninotify.utils.AuthenticationErrors
+import com.malky.uninotify.utils.DataErrors
 import com.malky.uninotify.utils.ErrorType
-import com.malky.uninotify.utils.RemoteDataErrors
 import com.malky.uninotify.utils.Response
 import com.malky.uninotify.utils.authenticate
 import kotlinx.coroutines.tasks.await
@@ -99,6 +99,6 @@ class AuthenticationServiceImpl @Inject constructor(
                 auth.signInWithCredential(authCredential).await()
             }
         } else
-            return Response.Error(error = RemoteDataErrors.UNKNOWN)
+            return Response.Error(error = DataErrors.Remote.UNKNOWN)
     }
 }

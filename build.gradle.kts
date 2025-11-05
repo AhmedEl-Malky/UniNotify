@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.secret.gradle.plugin) apply false
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.google.gms.google.services) apply false
+    alias(libs.plugins.ksp) apply false
 }
 
 buildscript{

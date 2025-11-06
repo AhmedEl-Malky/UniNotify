@@ -1,6 +1,7 @@
 package com.malky.uninotify.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 import com.malky.uninotify.domain.data.MetaDataService
 import com.malky.uninotify.utils.DataErrors
 import com.malky.uninotify.utils.Response
@@ -14,7 +15,7 @@ class MetaDataServiceImpl(
         return retrieveFromFireStore {
             dp.collection("Meta-Data")
                 .document("version")
-                .get()
+                .get(Source.SERVER)
                 .await()
                 .getString("version")
         }

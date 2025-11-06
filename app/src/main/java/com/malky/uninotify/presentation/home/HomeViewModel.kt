@@ -9,6 +9,7 @@ import com.malky.uninotify.utils.onError
 import com.malky.uninotify.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,12 +26,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.onStart {
-        val remoteVersion = getRemoteVersion()
-        if (remoteVersion != getLocalVersion()) {
-            updateLocalVersion(remoteVersion)
-            fetchRemoteEvents()
-        }
+        compareVersions()
         selectAllEvents()
+        selectSavedEventsCount()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000L),
@@ -38,12 +36,8 @@ class HomeViewModel @Inject constructor(
     )
 
 
-    private fun getLocalVersion(): String? {
-        var version: String? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            version = metaDataRepo.getLocalVersion()
-        }
-        return version
+    private suspend fun getLocalVersion(): String? {
+        return metaDataRepo.getLocalVersion()
     }
 
     private fun updateLocalVersion(version: String?) {
@@ -52,23 +46,43 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getRemoteVersion(): String? {
-        var version: String? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            metaDataRepo.getRemoteVersion()
-                .onSuccess {
-                    version = it
-                }
-                .onError { error ->
-                    version = null
-                    _state.update {
-                        it.copy(
-                            error = error.toUiText()
-                        )
-                    }
-                }
+    private suspend fun fetchRemoteVersion(): String? {
+        var result: String? = null
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
         }
-        return version
+        metaDataRepo.getRemoteVersion()
+            .onSuccess { version ->
+                result = version
+                _state.update {
+                    it.copy(
+                        isLoading = false
+                    )
+                }
+            }
+            .onError { error ->
+                result = null
+                _state.update {
+                    it.copy(
+                        error = error.toUiText()
+                    )
+                }
+            }
+        return result
+    }
+
+
+    private fun compareVersions() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val localVersion = getLocalVersion()
+            val remoteVersion = fetchRemoteVersion()
+            if (remoteVersion != localVersion) {
+                fetchRemoteEvents()
+                updateLocalVersion(remoteVersion)
+            }
+        }
     }
 
     private fun fetchRemoteEvents() {
@@ -81,6 +95,7 @@ class HomeViewModel @Inject constructor(
             }
             eventsRepo.fetchAllEvents()
                 .onSuccess { events ->
+                    cacheRemoteEvents(events)
                     _state.update {
                         it.copy(
                             isLoading = false,
@@ -99,6 +114,16 @@ class HomeViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     error = null
+                )
+            }
+        }
+    }
+
+    fun selectSavedEventsCount(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update {
+                it.copy(
+                    savedEventsCount = eventsRepo.selectSavedEventsCount()
                 )
             }
         }
@@ -133,10 +158,10 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-                .onError {
+                .onError { error ->
                     _state.update {
                         it.copy(
-                            error = it.error
+                            error = error.toUiText()
                         )
                     }
                 }

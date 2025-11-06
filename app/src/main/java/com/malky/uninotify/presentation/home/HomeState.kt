@@ -6,5 +6,6 @@ import com.malky.uninotify.utils.UiText
 data class HomeState(
     val isLoading: Boolean = true,
     val error: UiText? = null,
-    val events:List<Event> = emptyList()
+    val events:List<Event> = emptyList(),
+    val savedEventsCount: Int = 0
 )

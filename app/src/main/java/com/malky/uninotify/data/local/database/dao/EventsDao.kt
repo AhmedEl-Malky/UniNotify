@@ -19,6 +19,18 @@ interface EventsDao {
     @Query("SELECT * FROM Events_Table")
     suspend fun selectAllEvents(): List<EventEntity>
 
-    @Query("SELECT * FROM Events_Table where type = :type")
+    @Query("SELECT * FROM EVENTS_TABLE WHERE id = :id")
+    suspend fun selectEventByID(id: String) : EventEntity
+
+    @Query("SELECT * FROM Events_Table WHERE type = :type")
     suspend fun selectEventsByType(type: EventType) : List<EventEntity>
+
+    @Query("SELECT * FROM EVENTS_TABLE WHERE isSaved = TRUE")
+    suspend fun selectSavedEvents() : List<EventEntity>
+
+    @Query("SELECT COUNT(*) FROM EVENTS_TABLE WHERE isSaved = TRUE")
+    suspend fun selectSavedEventsCount() : Int
+
+    @Query("SELECT COUNT(*) FROM EVENTS_TABLE WHERE type = :type")
+    suspend fun selectEventsCountByType(type: EventType) : Int
 }

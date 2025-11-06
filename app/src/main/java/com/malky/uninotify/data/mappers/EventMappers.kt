@@ -8,6 +8,7 @@ import com.malky.uninotify.domain.core.EventType
 
 fun DocumentSnapshot.toEventDTO(): EventDTO {
     return EventDTO(
+        id = id,
         title = this.getString("title").toString(),
         description = this.getString("description").toString(),
         type = this.getString("type").toString(),
@@ -18,6 +19,7 @@ fun DocumentSnapshot.toEventDTO(): EventDTO {
 
 fun EventDTO.toEventEntity(): EventEntity {
     return EventEntity(
+        id = this.id,
         title = this.title,
         description = this.description,
         type = EventType.valueOf(this.type),
@@ -29,6 +31,19 @@ fun EventDTO.toEventEntity(): EventEntity {
 
 fun EventEntity.toEvent() : Event{
     return Event(
+        id = this.id,
+        title = this.title,
+        description = this.description,
+        type = this.type,
+        location = this.location,
+        date = this.date,
+        isSaved = this.isSaved
+    )
+}
+
+fun Event.toEventEntity() : EventEntity{
+    return EventEntity(
+        id = this.id,
         title = this.title,
         description = this.description,
         type = this.type,

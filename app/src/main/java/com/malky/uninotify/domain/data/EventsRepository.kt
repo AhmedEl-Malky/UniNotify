@@ -11,9 +11,17 @@ interface EventsRepository {
 
     suspend fun cacheEvents(events: List<EventEntity>): Response<Unit, DataErrors.Local>
 
-    suspend fun updateEvent(event: EventEntity): Response<Unit, DataErrors.Local>
+    suspend fun updateEvent(event: Event): Response<Unit, DataErrors.Local>
 
     suspend fun selectAllEvents(): Response<List<Event>, DataErrors.Local>
 
+    suspend fun selectEventById(id:String) : Response<Event, DataErrors.Local>
+
     suspend fun selectEventsByType(type: EventType): Response<List<Event>, DataErrors.Local>
+
+    suspend fun selectSavedEvents() : Response<List<Event>, DataErrors.Local>
+
+    suspend fun selectEventsCountByType(type: EventType) : Int
+
+    suspend fun selectSavedEventsCount() : Int
 }

@@ -8,9 +8,6 @@ sealed interface Destination {
     data object AppGraph : Destination
 
     @Serializable
-    data object Splash : Destination
-
-    @Serializable
     data object AuthenticationGraph : Destination
 
     @Serializable
@@ -26,7 +23,7 @@ sealed interface Destination {
     data object Home : Destination
 
     @Serializable
-    data object EventDetails : Destination
+    data class EventDetails(val eventId: String) : Destination
 
     @Serializable
     data object Categories : Destination

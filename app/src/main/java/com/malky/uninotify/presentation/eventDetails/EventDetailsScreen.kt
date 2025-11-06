@@ -138,16 +138,16 @@ private fun EventDetailsScreenContent(
                             modifier = Modifier
                                 .padding(16.dp)
                                 .padding(bottom = 16.dp),
-                            title = state.event.title,
-                            description = state.event.description
+                            title = state.event?.title ?: "",
+                            description = state.event?.description ?: ""
                         )
                     }
                     item {
                         EventDetailsCard(
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            date = state.event.date.format(),
-                            time = state.event.date.formatTime(),
-                            venue = state.event.location
+                            date = state.event?.date?.format() ?: "",
+                            time = state.event?.date?.formatTime() ?: "",
+                            venue = state.event?.location ?: ""
                         )
                     }
                     item {
@@ -165,7 +165,9 @@ private fun EventDetailsScreenContent(
                                         offset = DpOffset(x = 0.dp, y = 1.dp)
                                     )
                                 ),
-                            onClick = {}
+                            onClick = {
+                                onAction(EventDetailsAction.OnUpdateEventSaveState)
+                            }
                         ) {
                             Icon(
                                 modifier = Modifier
@@ -271,16 +273,16 @@ private fun EventDetailsScreenContent(
                     item {
                         EventInformationCard(
                             modifier = Modifier.padding(start = 16.dp, end = 8.dp, bottom = 16.dp),
-                            title = state.event.title,
-                            description = state.event.description
+                            title = state.event?.title ?: "",
+                            description = state.event?.description ?: ""
                         )
                     }
                     item {
                         EventDetailsCard(
                             modifier = Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp),
-                            date = state.event.date.format(),
-                            time = state.event.date.formatTime(),
-                            venue = state.event.location
+                            date = state.event?.date?.format() ?: "",
+                            time = state.event?.date?.formatTime() ?: "",
+                            venue = state.event?.location ?: ""
                         )
                     }
                     item {
@@ -297,7 +299,9 @@ private fun EventDetailsScreenContent(
                                         offset = DpOffset(x = 0.dp, y = 1.dp)
                                     )
                                 ),
-                            onClick = {}
+                            onClick = {
+                                onAction(EventDetailsAction.OnUpdateEventSaveState)
+                            }
                         ) {
                             Icon(
                                 modifier = Modifier

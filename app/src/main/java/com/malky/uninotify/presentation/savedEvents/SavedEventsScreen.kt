@@ -46,7 +46,6 @@ fun SavedEventsScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     SavedEventsScreenContent(
         state = state,
-        onAction = viewModel::onAction,
         deviceConfiguration = deviceConfiguration,
         user = user
     )
@@ -59,7 +58,6 @@ private fun SavedEventsScreenContent(
         .background(color = MaterialTheme.colorScheme.background)
         .consumeWindowInsets(WindowInsets.navigationBars),
     state: SavedEventsState,
-    onAction: (SavedEventsAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current,
     user: FirebaseUser

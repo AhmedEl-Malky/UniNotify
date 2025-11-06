@@ -4,7 +4,6 @@ import com.malky.uninotify.data.local.database.dao.EventsDao
 import com.malky.uninotify.data.local.database.entities.EventEntity
 import com.malky.uninotify.data.mappers.toEvent
 import com.malky.uninotify.data.mappers.toEventEntity
-import com.malky.uninotify.data.remote.dto.EventDTO
 import com.malky.uninotify.domain.core.Event
 import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.domain.data.EventsRepository
@@ -12,8 +11,6 @@ import com.malky.uninotify.domain.data.EventsService
 import com.malky.uninotify.utils.DataErrors
 import com.malky.uninotify.utils.Response
 import com.malky.uninotify.utils.map
-import com.malky.uninotify.utils.onError
-import com.malky.uninotify.utils.onSuccess
 import com.malky.uninotify.utils.query
 
 class EventsRepositoryImpl(
@@ -35,9 +32,9 @@ class EventsRepositoryImpl(
         }
     }
 
-    override suspend fun updateEvent(event: EventEntity): Response<Unit, DataErrors.Local> {
+    override suspend fun updateEvent(event: Event): Response<Unit, DataErrors.Local> {
         return query<Unit> {
-            dao.updateEvent(event)
+            dao.updateEvent(event.toEventEntity())
         }
     }
 
@@ -49,10 +46,26 @@ class EventsRepositoryImpl(
         }
     }
 
+    override suspend fun selectEventById(id: String): Response<Event, DataErrors.Local> {
+        return query { dao.selectEventByID(id).toEvent() }
+    }
+
     override suspend fun selectEventsByType(type: EventType): Response<List<Event>, DataErrors.Local> {
         return query<List<Event>> {
             dao.selectEventsByType(type).map { it.toEvent() }
         }
+    }
+
+    override suspend fun selectSavedEvents(): Response<List<Event>, DataErrors.Local> {
+        return query<List<Event>> { dao.selectSavedEvents().map { it.toEvent() } }
+    }
+
+    override suspend fun selectEventsCountByType(type: EventType): Int {
+        return dao.selectEventsCountByType(type)
+    }
+
+    override suspend fun selectSavedEventsCount(): Int {
+        return dao.selectSavedEventsCount()
     }
 
 }

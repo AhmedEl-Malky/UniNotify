@@ -112,12 +112,12 @@ private fun CategoriesScreenContent(
                     bottom = innerPadding.calculateBottomPadding() + 4.dp
                 )
             ) {
-                items(items = state.categories) { category ->
+                items(items = state.categories.entries.toList()) { category ->
                     CategoryCard(
-                        eventType = category.first,
-                        eventsCount = category.second,
+                        eventType = category.key,
+                        eventsCount = category.value,
                         onClick = {
-                            navController.navigate(Destination.CategorizedEvents(eventType = category.first))
+                            navController.navigate(Destination.CategorizedEvents(eventType = category.key))
                         }
                     )
                 }

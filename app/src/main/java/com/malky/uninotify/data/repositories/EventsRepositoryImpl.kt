@@ -32,9 +32,12 @@ class EventsRepositoryImpl(
         }
     }
 
-    override suspend fun updateEvent(event: Event): Response<Unit, DataErrors.Local> {
+    override suspend fun updateEvent(
+        id: String,
+        isSaved: Boolean
+    ): Response<Unit, DataErrors.Local> {
         return query<Unit> {
-            dao.updateEvent(event.toEventEntity())
+            dao.updateEventSaveState(id = id, isSaved = isSaved)
         }
     }
 

@@ -25,7 +25,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.onStart {
-        compareVersions()
+        if(!compareVersions()){
+            fetchRemoteEvents()
+        }
         selectAllEvents()
         selectSavedEventsCount()
     }.stateIn(
@@ -73,13 +75,14 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private suspend fun compareVersions() {
+    private suspend fun compareVersions() : Boolean {
         val localVersion = getLocalVersion()
         val remoteVersion = fetchRemoteVersion()
         if (remoteVersion != localVersion) {
             updateLocalVersion(remoteVersion)
-            fetchRemoteEvents()
+            return false
         }
+        return true
     }
 
     private suspend fun fetchRemoteEvents() {

@@ -43,7 +43,7 @@ class EventDetailsViewModel @Inject constructor(
     private fun updateEventSaveState(){
         viewModelScope.launch(Dispatchers.IO) {
             val event = _state.value.event
-            eventsRepo.updateEvent(event!!.copy(isSaved = !event.isSaved))
+            eventsRepo.updateEvent(id = event!!.id, isSaved = !event.isSaved)
         }
     }
 

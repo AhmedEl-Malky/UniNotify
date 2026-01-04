@@ -9,7 +9,6 @@ import com.malky.uninotify.utils.onError
 import com.malky.uninotify.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,7 +25,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.onStart {
-        compareVersions()
+        if(!compareVersions()){
+            fetchRemoteEvents()
+        }
         selectAllEvents()
         selectSavedEventsCount()
     }.stateIn(
@@ -74,52 +75,49 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun compareVersions() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val localVersion = getLocalVersion()
-            val remoteVersion = fetchRemoteVersion()
-            if (remoteVersion != localVersion) {
-                fetchRemoteEvents()
-                updateLocalVersion(remoteVersion)
+    private suspend fun compareVersions() : Boolean {
+        val localVersion = getLocalVersion()
+        val remoteVersion = fetchRemoteVersion()
+        if (remoteVersion != localVersion) {
+            updateLocalVersion(remoteVersion)
+            return false
+        }
+        return true
+    }
+
+    private suspend fun fetchRemoteEvents() {
+        _state.update {
+            it.copy(
+                isLoading = true,
+                error = null
+            )
+        }
+        eventsRepo.fetchAllEvents()
+            .onSuccess { events ->
+                cacheRemoteEvents(events)
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                    )
+                }
             }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.toUiText()
+                    )
+                }
+            }
+        delay(500)
+        _state.update {
+            it.copy(
+                error = null
+            )
         }
     }
 
-    private fun fetchRemoteEvents() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.update {
-                it.copy(
-                    isLoading = true,
-                    error = null
-                )
-            }
-            eventsRepo.fetchAllEvents()
-                .onSuccess { events ->
-                    cacheRemoteEvents(events)
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                        )
-                    }
-                }
-                .onError { error ->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = error.toUiText()
-                        )
-                    }
-                }
-            delay(500)
-            _state.update {
-                it.copy(
-                    error = null
-                )
-            }
-        }
-    }
-
-    fun selectSavedEventsCount(){
+    fun selectSavedEventsCount() {
         viewModelScope.launch(Dispatchers.IO) {
             _state.update {
                 it.copy(
@@ -138,34 +136,27 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
-            delay(500)
-            _state.update {
-                it.copy(
-                    error = null
-                )
-            }
+
         }
     }
 
 
-    private fun selectAllEvents() {
-        viewModelScope.launch(Dispatchers.IO) {
-            eventsRepo.selectAllEvents()
-                .onSuccess { events ->
-                    _state.update {
-                        it.copy(
-                            events = events
-                        )
-                    }
+    private suspend fun selectAllEvents() {
+        eventsRepo.selectAllEvents()
+            .onSuccess { events ->
+                _state.update {
+                    it.copy(
+                        events = events
+                    )
                 }
-                .onError { error ->
-                    _state.update {
-                        it.copy(
-                            error = error.toUiText()
-                        )
-                    }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        error = error.toUiText()
+                    )
                 }
-        }
+            }
     }
 
 }

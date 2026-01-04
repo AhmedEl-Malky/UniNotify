@@ -11,7 +11,7 @@ interface EventsRepository {
 
     suspend fun cacheEvents(events: List<EventEntity>): Response<Unit, DataErrors.Local>
 
-    suspend fun updateEvent(event: Event): Response<Unit, DataErrors.Local>
+    suspend fun updateEvent(id:String,isSaved:Boolean): Response<Unit, DataErrors.Local>
 
     suspend fun selectAllEvents(): Response<List<Event>, DataErrors.Local>
 

@@ -20,17 +20,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.domain.core.Event
 import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
@@ -44,11 +42,9 @@ fun CategorizedEventsScreen(
     deviceConfiguration: DeviceConfiguration,
     user: FirebaseUser
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     CategorizedEventsScreenContent(
-        state = state,
+        events = viewModel.events,
         eventType = viewModel.eventType,
-        onAction = viewModel::onAction,
         deviceConfiguration = deviceConfiguration,
         user = user
     )
@@ -59,9 +55,8 @@ private fun CategorizedEventsScreenContent(
     modifier: Modifier = Modifier
         .fillMaxSize()
         .background(color = MaterialTheme.colorScheme.background),
-    state: CategorizedEventsState,
+    events: List<Event>,
     eventType: EventType,
-    onAction: (CategorizedEventsAction) -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current,
     user: FirebaseUser
@@ -79,12 +74,12 @@ private fun CategorizedEventsScreenContent(
                     item {
                         HeaderSection(
                             title = "${eventType}s",
-                            subtitle = "2 events available",
+                            subtitle = "${events.size} events available",
                             navigationIcon = {
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -99,7 +94,7 @@ private fun CategorizedEventsScreenContent(
                             profilePic = user.photoUrl.toString()
                         )
                     }
-                    items(items = state.categorizedEvents) { event ->
+                    items(items = events) { event ->
                         EventCard(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             onClick = {},
@@ -128,7 +123,7 @@ private fun CategorizedEventsScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -144,7 +139,7 @@ private fun CategorizedEventsScreenContent(
 
                         )
                     }
-                    items(items = state.categorizedEvents) { event ->
+                    items(items = events) { event ->
                         EventCard(
                             modifier = Modifier.padding(horizontal = 8.dp),
                             onClick = {},
@@ -177,7 +172,7 @@ private fun CategorizedEventsScreenContent(
                                 IconButton(
                                     modifier = Modifier.padding(end = 4.dp),
                                     onClick = {
-                                navController.navigateUp()
+                                        navController.navigateUp()
                                     }
                                 ) {
                                     Icon(
@@ -193,7 +188,7 @@ private fun CategorizedEventsScreenContent(
 
                         )
                     }
-                    items(items = state.categorizedEvents) { event ->
+                    items(items = events) { event ->
                         EventCard(
                             modifier = Modifier.padding(horizontal = 8.dp),
                             onClick = {},

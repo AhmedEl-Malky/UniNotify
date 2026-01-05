@@ -1,26 +1,34 @@
 package com.malky.uninotify.presentation.categorizedEvents
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.malky.uninotify.app.navigation.Destination
+import com.malky.uninotify.domain.core.Event
 import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.data.EventsRepository
+import com.malky.uninotify.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CategorizedEventsViewModel @Inject constructor(
+    private val eventsRepo: EventsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _state = MutableStateFlow(CategorizedEventsState())
-    val state = _state.asStateFlow()
-
     val eventType: EventType = savedStateHandle.toRoute<Destination.CategorizedEvents>().eventType
-    fun onAction(action: CategorizedEventsAction) {
-        when (action) {
-            else -> {}
+    val events = mutableStateListOf<Event>()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            eventsRepo.selectEventsByType(eventType)
+                .onSuccess { result ->
+                    events.addAll(result)
+                }
         }
     }
 

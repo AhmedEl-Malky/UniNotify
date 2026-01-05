@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
 import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.presentation.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.CategoryCard
 import com.malky.uninotify.presentation.composables.HeaderSection
@@ -40,9 +41,8 @@ fun CategoriesScreen(
     viewModel: CategoriesViewModel,
     user: FirebaseUser
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     CategoriesScreenContent(
-        state = state,
+        categories = viewModel.categories,
         deviceConfiguration = deviceConfiguration,
         user = user
     )
@@ -50,7 +50,7 @@ fun CategoriesScreen(
 
 @Composable
 private fun CategoriesScreenContent(
-    state: CategoriesState,
+    categories: Map<EventType,Int>,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current,
     user: FirebaseUser
@@ -112,7 +112,7 @@ private fun CategoriesScreenContent(
                     bottom = innerPadding.calculateBottomPadding() + 4.dp
                 )
             ) {
-                items(items = state.categories.entries.toList()) { category ->
+                items(items = categories.entries.toList()) { category ->
                     CategoryCard(
                         eventType = category.key,
                         eventsCount = category.value,

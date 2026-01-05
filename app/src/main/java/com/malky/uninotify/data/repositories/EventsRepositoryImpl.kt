@@ -5,6 +5,7 @@ import com.malky.uninotify.data.local.database.entities.EventEntity
 import com.malky.uninotify.data.mappers.toEvent
 import com.malky.uninotify.data.mappers.toEventEntity
 import com.malky.uninotify.domain.core.Event
+import com.malky.uninotify.domain.core.EventCategory
 import com.malky.uninotify.domain.core.EventType
 import com.malky.uninotify.domain.data.EventsRepository
 import com.malky.uninotify.domain.data.EventsService
@@ -63,8 +64,8 @@ class EventsRepositoryImpl(
         return query<List<Event>> { dao.selectSavedEvents().map { it.toEvent() } }
     }
 
-    override suspend fun selectEventsCountByType(type: EventType): Int {
-        return dao.selectEventsCountByType(type)
+    override suspend fun selectEventsCountGroupByType(): Response<List<EventCategory>, DataErrors.Local> {
+        return query{ dao.selectEventsCountGroupByType() }
     }
 
     override suspend fun selectSavedEventsCount(): Int {

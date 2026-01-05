@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
 import com.malky.uninotify.data.local.database.entities.EventEntity
+import com.malky.uninotify.domain.core.EventCategory
 import com.malky.uninotify.domain.core.EventType
 import java.util.Date
 
@@ -72,6 +72,6 @@ interface EventsDao {
     @Query("SELECT COUNT(*) FROM EVENTS_TABLE WHERE isSaved = TRUE")
     suspend fun selectSavedEventsCount() : Int
 
-    @Query("SELECT COUNT(*) FROM EVENTS_TABLE WHERE type = :type")
-    suspend fun selectEventsCountByType(type: EventType) : Int
+    @Query("SELECT type, COUNT(*) As count FROM EVENTS_TABLE Group by type")
+    suspend fun selectEventsCountGroupByType() : List<EventCategory>
 }

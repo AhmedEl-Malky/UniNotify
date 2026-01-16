@@ -49,7 +49,7 @@ Manages application data from both local and remote sources:
 - **Room** – Local database for offline-first caching  
 - **Firebase Authentication** – User authentication  
 - **Firebase Firestore** – Remote data source  
-- **MVVM Architecture** – Clean separation of concerns  
+- **MVI Architecture** – Clean separation of concerns  
 - **Coroutines & Flow** – Asynchronous and reactive programming  
 
 ---

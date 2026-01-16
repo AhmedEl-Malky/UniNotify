@@ -16,7 +16,7 @@ The app delivers a smooth and reliable experience by following an **offline-firs
 - **Event Details:** View full event information including date, time, and venue.
 - **Saved Events:** Bookmark events for later access.
 - **Authentication:** Login using Email/Password or Google Sign-In.
-- **Offline Support:** Cached data remains accessible without internet.
+- **Offline First Architecture:** Cached data remains accessible without internet.
 - **Modern UI:** Clean and intuitive interface following Material Design 3.
 - **Planned Features:**
   - Local Notifications for event reminders.

@@ -1,6 +1,6 @@
-# UniNotify – Campus Events App
+# UniNotify
 
-<!--![uninotify_mockup](https://github.com/user-attachments/assets/PUT_YOUR_IMAGE_HERE) -->
+![Uninotify Mockup](https://github.com/user-attachments/assets/7e554f54-1797-46e3-9b03-13af78894240)
 
 ## 📌 Project Overview
 

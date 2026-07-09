@@ -2,10 +2,9 @@ package com.malky.uninotify.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
-import com.malky.uninotify.domain.data.MetaDataService
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
-import com.malky.uninotify.utils.retrieveFromFireStore
+import com.malky.uninotify.data.utils.Response
+import com.malky.uninotify.data.utils.retrieveFromFireStore
 import kotlinx.coroutines.tasks.await
 
 class MetaDataServiceImpl(

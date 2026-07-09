@@ -2,10 +2,10 @@ package com.malky.uninotify.presentation.authentication.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.malky.uninotify.domain.authentication.AuthenticationService
+import com.malky.uninotify.data.remote.AuthenticationService
 import com.malky.uninotify.utils.UserDataValidator
-import com.malky.uninotify.utils.onError
-import com.malky.uninotify.utils.onSuccess
+import com.malky.uninotify.data.utils.onError
+import com.malky.uninotify.data.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

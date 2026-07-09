@@ -15,13 +15,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.userProfileChangeRequest
 import com.malky.uninotify.BuildConfig
-import com.malky.uninotify.domain.authentication.AuthenticationService
-import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
 import com.malky.uninotify.utils.AuthenticationErrors
 import com.malky.uninotify.utils.DataErrors
 import com.malky.uninotify.utils.ErrorType
-import com.malky.uninotify.utils.Response
-import com.malky.uninotify.utils.authenticate
+import com.malky.uninotify.data.utils.Response
+import com.malky.uninotify.data.utils.authenticate
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

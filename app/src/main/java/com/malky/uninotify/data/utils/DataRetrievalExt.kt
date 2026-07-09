@@ -1,11 +1,11 @@
-package com.malky.uninotify.utils
+package com.malky.uninotify.data.utils
 
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteDiskIOException
-import android.util.Log
 import androidx.sqlite.SQLiteException
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.malky.uninotify.utils.DataErrors
 import java.lang.Exception
 
 suspend inline fun <T> retrieveFromFireStore(

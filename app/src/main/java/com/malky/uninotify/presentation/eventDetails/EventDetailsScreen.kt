@@ -41,15 +41,14 @@ import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Plus
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventDetailsCard
 import com.malky.uninotify.presentation.composables.EventInformationCard
 import com.malky.uninotify.presentation.composables.HeaderSection
 import com.malky.uninotify.presentation.composables.PrimaryButton
 import com.malky.uninotify.presentation.composables.SecondaryButton
-import com.malky.uninotify.presentation.format
-import com.malky.uninotify.presentation.formatTime
+import com.malky.uninotify.presentation.utils.format
+import com.malky.uninotify.presentation.utils.formatTime
 
 @Composable
 fun EventDetailsScreen(

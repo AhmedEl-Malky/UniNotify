@@ -26,8 +26,8 @@ import com.composables.icons.lucide.GraduationCap
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Mail
 import com.google.firebase.auth.FirebaseUser
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.app.theme.Green
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.theme.Green
 
 @Composable
 fun ContactInformationCard(

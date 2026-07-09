@@ -1,10 +1,9 @@
 package com.malky.uninotify.data.repositories
 
 import com.malky.uninotify.data.local.preferences.MetaDataPreferences
-import com.malky.uninotify.domain.data.MetaDataRepository
-import com.malky.uninotify.domain.data.MetaDataService
+import com.malky.uninotify.data.remote.MetaDataService
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
+import com.malky.uninotify.data.utils.Response
 
 class MetaDataRepositoryImpl(
     private val metaData: MetaDataPreferences,

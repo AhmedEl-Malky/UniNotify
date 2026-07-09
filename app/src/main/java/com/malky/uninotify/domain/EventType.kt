@@ -1,4 +1,4 @@
-package com.malky.uninotify.domain.core
+package com.malky.uninotify.domain
 
 enum class EventType {
     Seminar,

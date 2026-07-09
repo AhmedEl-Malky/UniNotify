@@ -4,10 +4,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 import com.malky.uninotify.data.mappers.toEventDTO
 import com.malky.uninotify.data.remote.dto.EventDTO
-import com.malky.uninotify.domain.data.EventsService
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
-import com.malky.uninotify.utils.retrieveFromFireStore
+import com.malky.uninotify.data.utils.Response
+import com.malky.uninotify.data.utils.retrieveFromFireStore
 import kotlinx.coroutines.tasks.await
 
 class EventsServiceImpl(

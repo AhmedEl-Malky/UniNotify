@@ -1,10 +1,11 @@
 package com.malky.uninotify.utils
 
 import com.malky.uninotify.R
+import com.malky.uninotify.data.utils.Response
 
 object UserDataValidator {
 
-    fun validateName(name: String): Response<Unit,UserDataError>{
+    fun validateName(name: String): Response<Unit, UserDataError> {
         if (name.trim().isBlank()){
             return Response.Error(UserDataError.Name_is_empty)
         }
@@ -14,7 +15,7 @@ object UserDataValidator {
         return Response.Success(Unit)
     }
 
-    fun validateEmail(email: String): Response<Unit,UserDataError>{
+    fun validateEmail(email: String): Response<Unit, UserDataError> {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$".toRegex()
         if (email.trim().isBlank()){
             return Response.Error(UserDataError.Email_is_empty)
@@ -25,7 +26,7 @@ object UserDataValidator {
         return Response.Success(Unit)
     }
 
-    fun validatePassword(password: String): Response<Unit,UserDataError>{
+    fun validatePassword(password: String): Response<Unit, UserDataError> {
         if (password.trim().isBlank()){
             return Response.Error(UserDataError.Password_is_empty)
         }
@@ -35,7 +36,7 @@ object UserDataValidator {
         return Response.Success(Unit)
     }
 
-    fun validateConfirmPassword(password: String, confirmPassword: String): Response<Unit,UserDataError>{
+    fun validateConfirmPassword(password: String, confirmPassword: String): Response<Unit, UserDataError> {
         if (password.trim() != confirmPassword.trim()){
             return Response.Error(UserDataError.Passwords_Dont_Match)
         }

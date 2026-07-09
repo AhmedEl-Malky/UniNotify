@@ -1,4 +1,6 @@
-package com.malky.uninotify.utils
+package com.malky.uninotify.data.utils
+
+import com.malky.uninotify.utils.ErrorType
 
 sealed interface Response<out D, out E : ErrorType> {
     data class Success<D>(val data: D) : Response<D, Nothing>

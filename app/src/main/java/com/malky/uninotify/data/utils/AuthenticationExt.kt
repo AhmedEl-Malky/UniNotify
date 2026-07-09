@@ -1,4 +1,4 @@
-package com.malky.uninotify.utils
+package com.malky.uninotify.data.utils
 
 
 import com.google.firebase.FirebaseNetworkException
@@ -7,6 +7,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
+import com.malky.uninotify.utils.AuthenticationErrors
+import com.malky.uninotify.utils.DataErrors
+import com.malky.uninotify.utils.ErrorType
 import kotlinx.io.IOException
 import java.net.SocketTimeoutException
 

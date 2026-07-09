@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.malky.uninotify.app.navigation.Destination
-import com.malky.uninotify.domain.core.Event
-import com.malky.uninotify.domain.core.EventType
-import com.malky.uninotify.domain.data.EventsRepository
-import com.malky.uninotify.utils.onSuccess
+import com.malky.uninotify.domain.Event
+import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.data.repositories.EventsRepository
+import com.malky.uninotify.data.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

@@ -2,7 +2,7 @@ package com.malky.uninotify.utils
 
 import com.malky.uninotify.R
 
-sealed interface DataErrors : ErrorType{
+sealed interface DataErrors : ErrorType {
     enum class Remote : DataErrors {
         REQUEST_TIMEOUT,
         TOO_MANY_REQUESTS,

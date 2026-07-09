@@ -2,7 +2,7 @@ package com.malky.uninotify.data.local.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.EventType
 import java.util.Date
 
 @Entity(tableName = "Events_Table")

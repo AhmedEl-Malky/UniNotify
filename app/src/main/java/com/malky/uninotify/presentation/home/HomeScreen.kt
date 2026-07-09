@@ -51,13 +51,13 @@ import com.composables.icons.lucide.User
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.EventsCountSection
 import com.malky.uninotify.presentation.composables.HeaderSection
 import com.malky.uninotify.presentation.composables.NavigationCard
-import com.malky.uninotify.presentation.format
-import com.malky.uninotify.presentation.formatTime
+import com.malky.uninotify.presentation.utils.format
+import com.malky.uninotify.presentation.utils.formatTime
 
 @Composable
 fun HomeScreen(

@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,6 +39,7 @@ import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.AppLogo
 import com.malky.uninotify.presentation.composables.AuthenticationHeaderSection
 import com.malky.uninotify.presentation.composables.SignupForm
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,7 +52,8 @@ fun SignupScreen(
     SignupScreenContent(
         deviceConfiguration = deviceConfiguration,
         state = state,
-        onAction = viewModel::onAction,
+        listener = viewModel,
+        events = viewModel.events,
         updateUser = updateUser
     )
 }
@@ -65,19 +68,23 @@ private fun SignupScreenContent(
         .padding(horizontal = 16.dp, vertical = 24.dp),
     deviceConfiguration: DeviceConfiguration,
     state: SignupState,
-    onAction: (SignupAction) -> Unit,
+    listener: SignupInteractionListener,
+    events: Flow<SignupEvents>,
     updateUser:() -> Unit,
     navController: NavHostController = LocalNavController.current
 ) {
     val snackBarHost = remember{ SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-    state.error?.asString()?.let { error ->
-        coroutineScope.launch{
-            snackBarHost.showSnackbar(
-                message = error,
-                actionLabel = "Dismiss",
-                duration = SnackbarDuration.Short
-            )
+    LaunchedEffect(Unit) {
+        events.collect { event ->
+            when(event){
+                is SignupEvents.OnError -> {
+                    snackBarHost.showSnackbar(
+                        message = event.error.toString(),
+                        actionLabel = "Dismiss",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
         }
     }
     Scaffold(
@@ -126,7 +133,7 @@ private fun SignupScreenContent(
                             modifier = Modifier.fillMaxWidth(),
                             navController = navController,
                             state = state,
-                            onAction = onAction,
+                            listener = listener,
                             updateUser = updateUser
                         )
                     }
@@ -148,7 +155,7 @@ private fun SignupScreenContent(
                             modifier = Modifier.weight(1f),
                             navController = navController,
                             state = state,
-                            onAction = onAction,
+                            listener = listener,
                             updateUser = updateUser
                         )
                     }
@@ -176,7 +183,7 @@ private fun SignupScreenContent(
                             modifier = Modifier.widthIn(max = 540.dp),
                             navController = navController,
                             state = state,
-                            onAction = onAction,
+                            listener = listener,
                             updateUser = updateUser
                         )
                     }

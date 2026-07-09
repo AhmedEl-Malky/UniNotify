@@ -4,7 +4,6 @@ import com.malky.uninotify.utils.UiText
 
 data class SignupState(
     val isLoading: Boolean = false,
-    val error: UiText? = null,
     val firstName: String = "",
     val firstNameValidation: UiText? = null,
     val lastName: String = "",

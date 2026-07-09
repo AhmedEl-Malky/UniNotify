@@ -32,8 +32,7 @@ import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.HeaderSection
 

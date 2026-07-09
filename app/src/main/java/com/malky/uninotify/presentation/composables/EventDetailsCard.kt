@@ -28,8 +28,8 @@ import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Clock
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.MapPin
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.app.theme.Green
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.theme.Green
 
 @Composable
 fun EventDetailsCard(

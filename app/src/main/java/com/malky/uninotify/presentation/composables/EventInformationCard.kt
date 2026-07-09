@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
 
 @Composable
 fun EventInformationCard(

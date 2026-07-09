@@ -1,6 +1,6 @@
 package com.malky.uninotify.app.navigation
 
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.EventType
 import kotlinx.serialization.Serializable
 
 sealed interface Destination {

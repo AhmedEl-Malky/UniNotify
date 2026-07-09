@@ -1,4 +1,4 @@
-package com.malky.uninotify.presentation
+package com.malky.uninotify.presentation.utils
 
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass

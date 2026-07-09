@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.UserSharedViewModel
 import com.malky.uninotify.presentation.authentication.login.LoginScreen
 import com.malky.uninotify.presentation.authentication.signup.SignupScreen

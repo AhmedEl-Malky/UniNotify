@@ -16,22 +16,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.Destination
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.domain.core.EventType
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.CategoryCard
 import com.malky.uninotify.presentation.composables.HeaderSection
 

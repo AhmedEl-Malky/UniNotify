@@ -1,9 +1,8 @@
-package com.malky.uninotify.presentation
+package com.malky.uninotify.presentation.utils
 
 
 import android.text.format.DateFormat
 import java.util.Date
-import java.util.logging.SimpleFormatter
 
 
 fun Date.format(): String {

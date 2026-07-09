@@ -3,10 +3,10 @@ package com.malky.uninotify.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.malky.uninotify.data.local.database.entities.EventEntity
-import com.malky.uninotify.domain.data.EventsRepository
-import com.malky.uninotify.domain.data.MetaDataRepository
-import com.malky.uninotify.utils.onError
-import com.malky.uninotify.utils.onSuccess
+import com.malky.uninotify.data.repositories.EventsRepository
+import com.malky.uninotify.data.repositories.MetaDataRepository
+import com.malky.uninotify.data.utils.onError
+import com.malky.uninotify.data.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

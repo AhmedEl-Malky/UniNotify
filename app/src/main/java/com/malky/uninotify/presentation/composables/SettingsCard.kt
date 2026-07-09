@@ -26,7 +26,7 @@ import com.composables.icons.lucide.Bell
 import com.composables.icons.lucide.CircleHelp
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Settings
-import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
 
 
 @Composable

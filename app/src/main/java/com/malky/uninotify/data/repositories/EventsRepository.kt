@@ -1,11 +1,11 @@
-package com.malky.uninotify.domain.data
+package com.malky.uninotify.data.repositories
 
 import com.malky.uninotify.data.local.database.entities.EventEntity
-import com.malky.uninotify.domain.core.Event
-import com.malky.uninotify.domain.core.EventCategory
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.Event
+import com.malky.uninotify.domain.EventCategory
+import com.malky.uninotify.domain.EventType
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
+import com.malky.uninotify.data.utils.Response
 
 interface EventsRepository {
     suspend fun fetchAllEvents(): Response<List<EventEntity>, DataErrors.Remote>

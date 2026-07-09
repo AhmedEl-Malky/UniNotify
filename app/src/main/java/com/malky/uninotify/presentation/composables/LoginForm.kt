@@ -44,7 +44,8 @@ import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.EyeOff
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.Destination
-import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.authentication.login.LoginInteractionListener
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
 import com.malky.uninotify.presentation.authentication.login.LoginState
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -52,11 +53,7 @@ import com.malky.uninotify.presentation.authentication.login.LoginState
 fun LoginForm(
     modifier: Modifier = Modifier,
     state: LoginState,
-    onEmailChange: (String) -> Unit,
-    onEmailValidate: () -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onSignIn: (() -> Unit) -> Unit,
-    onSignInWithGoogle: (() -> Unit) -> Unit,
+    listener: LoginInteractionListener,
     updateUser:() -> Unit,
     navController: NavHostController
 ) {
@@ -77,7 +74,7 @@ fun LoginForm(
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.email,
-                onValueChange = { onEmailChange(it) },
+                onValueChange = { listener.onEmailChange(it) },
                 placeholder = {
                     Text(
                         text = "Email",
@@ -103,7 +100,7 @@ fun LoginForm(
                 ),
                 keyboardActions = KeyboardActions(
                     onNext = {
-                        onEmailValidate()
+                        listener.onEmailValidate()
                         focusRequester.moveFocus(FocusDirection.Down)
                     }
                 )
@@ -119,7 +116,7 @@ fun LoginForm(
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.password,
-                onValueChange = { onPasswordChange(it) },
+                onValueChange = { listener.onPasswordChange(it) },
                 placeholder = {
                     Text(
                         text = "Password",
@@ -161,7 +158,7 @@ fun LoginForm(
                 .padding(top = 12.dp),
             onClick = {
                 focusRequester.clearFocus()
-                onSignIn {
+                listener.onSignIn {
                     updateUser()
                     navController.navigate(Destination.MainGraph) {
                         popUpTo(Destination.AuthenticationGraph) {
@@ -237,7 +234,7 @@ fun LoginForm(
                 .padding(top = 12.dp),
             isLoading = state.isGoogleSignInLoading,
             onClick = {
-                onSignInWithGoogle {
+                listener.onSignInWithGoogle {
                     updateUser()
                     navController.navigate(Destination.MainGraph) {
                         popUpTo(Destination.AuthenticationGraph) {

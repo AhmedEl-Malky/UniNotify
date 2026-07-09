@@ -1,6 +1,6 @@
 package com.malky.uninotify.presentation.home
 
-import com.malky.uninotify.domain.core.Event
+import com.malky.uninotify.domain.Event
 import com.malky.uninotify.utils.UiText
 
 data class HomeState(

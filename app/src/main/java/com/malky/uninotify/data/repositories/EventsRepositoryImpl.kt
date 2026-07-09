@@ -4,15 +4,14 @@ import com.malky.uninotify.data.local.database.dao.EventsDao
 import com.malky.uninotify.data.local.database.entities.EventEntity
 import com.malky.uninotify.data.mappers.toEvent
 import com.malky.uninotify.data.mappers.toEventEntity
-import com.malky.uninotify.domain.core.Event
-import com.malky.uninotify.domain.core.EventCategory
-import com.malky.uninotify.domain.core.EventType
-import com.malky.uninotify.domain.data.EventsRepository
-import com.malky.uninotify.domain.data.EventsService
+import com.malky.uninotify.domain.Event
+import com.malky.uninotify.domain.EventCategory
+import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.data.remote.EventsService
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
-import com.malky.uninotify.utils.map
-import com.malky.uninotify.utils.query
+import com.malky.uninotify.data.utils.Response
+import com.malky.uninotify.data.utils.map
+import com.malky.uninotify.data.utils.query
 
 class EventsRepositoryImpl(
     private val service: EventsService,

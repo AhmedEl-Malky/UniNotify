@@ -3,8 +3,8 @@ package com.malky.uninotify.data.mappers
 import com.google.firebase.firestore.DocumentSnapshot
 import com.malky.uninotify.data.local.database.entities.EventEntity
 import com.malky.uninotify.data.remote.dto.EventDTO
-import com.malky.uninotify.domain.core.Event
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.Event
+import com.malky.uninotify.domain.EventType
 
 fun DocumentSnapshot.toEventDTO(): EventDTO {
     return EventDTO(

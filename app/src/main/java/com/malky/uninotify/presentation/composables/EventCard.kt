@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
+import com.malky.uninotify.domain.EventType
 
 @Composable
 fun EventCard(

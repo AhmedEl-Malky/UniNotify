@@ -1,7 +1,7 @@
 package com.malky.uninotify.data.local.database.converters
 
 import androidx.room.TypeConverter
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.EventType
 import java.util.Date
 
 class EventTypeConverters {

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Bookmark
 import com.composables.icons.lucide.Calendar
 import com.composables.icons.lucide.Lucide
-import com.malky.uninotify.app.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
 
 @Composable
 fun EventsCountSection(

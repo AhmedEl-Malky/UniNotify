@@ -28,13 +28,13 @@ import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.Lucide
 import com.google.firebase.auth.FirebaseUser
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.domain.core.Event
-import com.malky.uninotify.domain.core.EventType
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.domain.Event
+import com.malky.uninotify.domain.EventType
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.EventCard
 import com.malky.uninotify.presentation.composables.HeaderSection
-import com.malky.uninotify.presentation.format
-import com.malky.uninotify.presentation.formatTime
+import com.malky.uninotify.presentation.utils.format
+import com.malky.uninotify.presentation.utils.formatTime
 
 @Composable
 fun CategorizedEventsScreen(

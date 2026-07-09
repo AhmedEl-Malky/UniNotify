@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,27 +34,26 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.AppLogo
 import com.malky.uninotify.presentation.composables.AuthenticationHeaderSection
 import com.malky.uninotify.presentation.composables.LoginForm
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
     deviceConfiguration: DeviceConfiguration,
     viewModel: LoginViewModel,
-    updateUser:() -> Unit
+    updateUser: () -> Unit
 ) {
+
     val state by viewModel.state.collectAsStateWithLifecycle()
     LoginScreenContent(
         state = state,
-        onEmailChange = viewModel::onEmailChange,
-        onEmailValidate = viewModel::onEmailValidate,
-        onPasswordChange = viewModel::onPasswordChange,
-        onSignIn = viewModel::onSignIn,
-        onSignInWithGoogle = viewModel::onSignInWithGoogle,
+        listener = viewModel,
+        events = viewModel.events,
         deviceConfiguration = deviceConfiguration,
         updateUser = updateUser
     )
@@ -68,24 +68,29 @@ private fun LoginScreenContent(
         )
         .padding(horizontal = 16.dp, vertical = 24.dp),
     state: LoginState,
-    onEmailChange:(String) -> Unit,
-    onEmailValidate:() -> Unit,
-    onPasswordChange:(String) -> Unit,
-    onSignIn:(() -> Unit) -> Unit,
-    onSignInWithGoogle:(() -> Unit) -> Unit,
-    updateUser:() -> Unit,
+    events: Flow<LoginEvents>,
+    listener: LoginInteractionListener,
+    updateUser: () -> Unit,
     deviceConfiguration: DeviceConfiguration,
     navController: NavHostController = LocalNavController.current
 ) {
-    val snackBarHost = remember{ SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-    state.error?.asString()?.let { error ->
-        coroutineScope.launch{
-            snackBarHost.showSnackbar(
-                message = error,
-                actionLabel = "Dismiss",
-                duration = SnackbarDuration.Short
-            )
+    val snackBarHost = remember { SnackbarHostState() }
+//    state.error?.asString()?.let { error ->
+//        coroutineScope.launch{
+//
+//        }
+//    }
+    LaunchedEffect(Unit) {
+        events.collect { event ->
+            when (event) {
+                is LoginEvents.OnError -> {
+                    snackBarHost.showSnackbar(
+                        message = event.error.toString(),
+                        actionLabel = "Dismiss",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
         }
     }
     Scaffold(
@@ -97,7 +102,7 @@ private fun LoginScreenContent(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackBarHost
-            ){ it ->
+            ) { it ->
                 Snackbar(
                     modifier = Modifier
                         .windowInsetsPadding(WindowInsets.navigationBars),
@@ -133,11 +138,7 @@ private fun LoginScreenContent(
                         LoginForm(
                             modifier = Modifier.fillMaxWidth(),
                             state = state,
-                            onEmailChange = onEmailChange,
-                            onEmailValidate = onEmailValidate,
-                            onPasswordChange = onPasswordChange,
-                            onSignIn = onSignIn,
-                            onSignInWithGoogle = onSignInWithGoogle,
+                            listener = listener,
                             updateUser = updateUser,
                             navController = navController
                         )
@@ -159,11 +160,7 @@ private fun LoginScreenContent(
                         LoginForm(
                             modifier = Modifier.weight(1f),
                             state = state,
-                            onEmailChange = onEmailChange,
-                            onEmailValidate = onEmailValidate,
-                            onPasswordChange = onPasswordChange,
-                            onSignIn = onSignIn,
-                            onSignInWithGoogle = onSignInWithGoogle,
+                            listener = listener,
                             navController = navController,
                             updateUser = updateUser
                         )
@@ -191,11 +188,7 @@ private fun LoginScreenContent(
                         LoginForm(
                             modifier = Modifier.widthIn(max = 540.dp),
                             state = state,
-                            onEmailChange = onEmailChange,
-                            onEmailValidate = onEmailValidate,
-                            onPasswordChange = onPasswordChange,
-                            onSignIn = onSignIn,
-                            onSignInWithGoogle = onSignInWithGoogle,
+                            listener = listener,
                             updateUser = updateUser,
                             navController = navController
                         )

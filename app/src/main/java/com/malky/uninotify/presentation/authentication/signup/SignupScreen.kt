@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.malky.uninotify.app.navigation.LocalNavController
-import com.malky.uninotify.app.theme.UniNotifyTheme
-import com.malky.uninotify.presentation.DeviceConfiguration
+import com.malky.uninotify.presentation.theme.UniNotifyTheme
+import com.malky.uninotify.presentation.utils.DeviceConfiguration
 import com.malky.uninotify.presentation.composables.AppLogo
 import com.malky.uninotify.presentation.composables.AuthenticationHeaderSection
 import com.malky.uninotify.presentation.composables.SignupForm

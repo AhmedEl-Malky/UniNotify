@@ -3,16 +3,18 @@ package com.malky.uninotify.presentation.authentication.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.malky.uninotify.domain.authentication.AuthenticationService
-import com.malky.uninotify.domain.authentication.ThirdPartyAuthentication
+import com.malky.uninotify.data.remote.AuthenticationService
+import com.malky.uninotify.data.remote.ThirdPartyAuthentication
 import com.malky.uninotify.utils.UserDataValidator
-import com.malky.uninotify.utils.onError
-import com.malky.uninotify.utils.onSuccess
+import com.malky.uninotify.data.utils.onError
+import com.malky.uninotify.data.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,11 +24,14 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authService: AuthenticationService,
     private val thirdPartyAuth: ThirdPartyAuthentication
-) : ViewModel() {
+) : ViewModel(), LoginInteractionListener {
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    fun onEmailChange(value: String) {
+    private val eventsChannel = Channel<LoginEvents>()
+    val events = eventsChannel.receiveAsFlow()
+
+    override fun onEmailChange(value: String) {
         _state.update {
             it.copy(
                 email = value,
@@ -35,7 +40,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onEmailValidate() {
+    override fun onEmailValidate() {
         UserDataValidator.validateEmail(_state.value.email)
             .onSuccess {
                 _state.update {
@@ -54,7 +59,7 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    fun onPasswordChange(value: String) {
+    override fun onPasswordChange(value: String) {
         _state.update {
             it.copy(
                 password = value,
@@ -62,19 +67,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onSignIn(onSuccess: () -> Unit) {
-        _state.update {
-            it.copy(
-                error = null
-            )
-        }
+    override fun onSignIn(onSuccess: () -> Unit) {
         onEmailValidate()
         if (_state.value.emailValidation == null) {
             viewModelScope.launch(Dispatchers.IO) {
                 _state.update {
                     it.copy(
                         isLoading = true,
-                        error = null
                     )
                 }
                 authService.signIn(
@@ -84,7 +83,6 @@ class LoginViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = null
                         )
                     }
                     withContext(Dispatchers.Main) { onSuccess() }
@@ -92,26 +90,19 @@ class LoginViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = error.toUiText()
                         )
                     }
-                }
-                delay(500)
-                _state.update {
-                    it.copy(
-                        error = null
-                    )
+                    eventsChannel.send(LoginEvents.OnError(error.toUiText()))
                 }
             }
         }
     }
 
-    fun onSignInWithGoogle(onSuccess: () -> Unit) {
+    override fun onSignInWithGoogle(onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.update {
                 it.copy(
                     isGoogleSignInLoading = true,
-                    error = null
                 )
             }
             thirdPartyAuth.signInWithGoogle()
@@ -121,17 +112,10 @@ class LoginViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isGoogleSignInLoading = false,
-                            error = error.toUiText()
                         )
                     }
+                    eventsChannel.send(LoginEvents.OnError(error.toUiText()))
                 }
-            delay(500)
-            _state.update {
-                it.copy(
-                    error = null
-                )
-            }
         }
     }
-
 }

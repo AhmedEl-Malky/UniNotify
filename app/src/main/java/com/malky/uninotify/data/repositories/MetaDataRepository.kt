@@ -1,7 +1,7 @@
-package com.malky.uninotify.domain.data
+package com.malky.uninotify.data.repositories
 
 import com.malky.uninotify.utils.DataErrors
-import com.malky.uninotify.utils.Response
+import com.malky.uninotify.data.utils.Response
 
 interface MetaDataRepository {
     suspend fun updateVersion(version: String)

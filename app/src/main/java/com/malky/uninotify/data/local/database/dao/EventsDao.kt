@@ -6,8 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.malky.uninotify.data.local.database.entities.EventEntity
-import com.malky.uninotify.domain.core.EventCategory
-import com.malky.uninotify.domain.core.EventType
+import com.malky.uninotify.domain.EventCategory
+import com.malky.uninotify.domain.EventType
 import java.util.Date
 
 @Dao

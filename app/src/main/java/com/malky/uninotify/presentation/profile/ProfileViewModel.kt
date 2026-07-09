@@ -2,7 +2,7 @@ package com.malky.uninotify.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.malky.uninotify.domain.authentication.AuthenticationService
+import com.malky.uninotify.data.remote.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

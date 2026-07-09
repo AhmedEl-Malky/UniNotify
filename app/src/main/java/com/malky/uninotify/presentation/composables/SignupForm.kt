@@ -36,7 +36,7 @@ import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.EyeOff
 import com.composables.icons.lucide.Lucide
 import com.malky.uninotify.app.navigation.Destination
-import com.malky.uninotify.presentation.authentication.signup.SignupAction
+import com.malky.uninotify.presentation.authentication.signup.SignupInteractionListener
 import com.malky.uninotify.presentation.authentication.signup.SignupState
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -44,7 +44,7 @@ import com.malky.uninotify.presentation.authentication.signup.SignupState
 fun SignupForm(
     modifier: Modifier = Modifier,
     state: SignupState,
-    onAction: (SignupAction) -> Unit,
+    listener: SignupInteractionListener,
     updateUser:() -> Unit,
     navController: NavHostController
 ) {
@@ -73,7 +73,7 @@ fun SignupForm(
                     modifier = Modifier.fillMaxWidth(),
                     value = state.firstName,
                     onValueChange = { value ->
-                        onAction(SignupAction.OnFirstNameChange(value))
+                        listener.onFirstNameChange(value)
                     },
                     placeholder = {
                         Text(
@@ -102,7 +102,7 @@ fun SignupForm(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusRequester.moveFocus(FocusDirection.Next)
-                            onAction(SignupAction.OnFirstNameValidate)
+                            listener.onFirstNameValidate()
                         }
                     )
                 )
@@ -119,7 +119,7 @@ fun SignupForm(
                     modifier = Modifier.fillMaxWidth(),
                     value = state.lastName,
                     onValueChange = { value ->
-                        onAction(SignupAction.OnLastNameChange(value))
+                        listener.onLastNameChange(value)
                     },
                     placeholder = {
                         Text(
@@ -148,7 +148,7 @@ fun SignupForm(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             focusRequester.moveFocus(FocusDirection.Next)
-                            onAction(SignupAction.OnLastNameValidate)
+                            listener.onLastNameValidate()
                         }
                     ),
                 )
@@ -165,7 +165,7 @@ fun SignupForm(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.email,
                 onValueChange = { value ->
-                    onAction(SignupAction.OnEmailChange(value))
+                    listener.onEmailChange(value)
                 },
                 placeholder = {
                     Text(
@@ -193,7 +193,7 @@ fun SignupForm(
                 keyboardActions = KeyboardActions(
                     onNext = {
                         focusRequester.moveFocus(FocusDirection.Down)
-                        onAction(SignupAction.OnEmailValidate)
+                        listener.onEmailValidate()
                     }
                 )
             )
@@ -209,7 +209,7 @@ fun SignupForm(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.password,
                 onValueChange = { value ->
-                    onAction(SignupAction.OnPasswordChange(value))
+                    listener.onPasswordChange(value)
                 },
                 placeholder = {
                     Text(
@@ -237,7 +237,7 @@ fun SignupForm(
                 keyboardActions = KeyboardActions(
                     onNext = {
                         focusRequester.moveFocus(FocusDirection.Next)
-                        onAction(SignupAction.OnPasswordValidate)
+                        listener.onPasswordValidate()
                     }
                 ),
                 visualTransformation = if (!isPasswordVisible) PasswordVisualTransformation(mask = '•') else VisualTransformation.None,
@@ -267,7 +267,7 @@ fun SignupForm(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.confirmPassword,
                 onValueChange = { value ->
-                    onAction(SignupAction.OnConfirmPasswordChange(value))
+                    listener.onConfirmPasswordChange(value)
                 },
                 placeholder = {
                     Text(
@@ -295,7 +295,7 @@ fun SignupForm(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         focusRequester.clearFocus()
-                        onAction(SignupAction.OnConfirmPasswordValidate)
+                        listener.onConfirmPasswordValidate()
                     }
                 ),
                 visualTransformation = if (!isConfirmPasswordVisible) PasswordVisualTransformation(
@@ -321,8 +321,7 @@ fun SignupForm(
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onClick = {
-                onAction(
-                    SignupAction.OnSignup(
+                listener.onSignup(
                         onSuccess = {
                             updateUser()
                             navController.navigate(Destination.MainGraph){
@@ -332,7 +331,6 @@ fun SignupForm(
                             }
                         }
                     )
-                )
             }
         ) {
             if (state.isLoading)

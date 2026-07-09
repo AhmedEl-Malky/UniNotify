@@ -8,9 +8,11 @@ import com.malky.uninotify.data.utils.onError
 import com.malky.uninotify.data.utils.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,27 +21,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val authService: AuthenticationService,
-) : ViewModel() {
+) : ViewModel(), SignupInteractionListener {
     private val _state = MutableStateFlow(SignupState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: SignupAction) {
-        when (action) {
-            is SignupAction.OnFirstNameChange -> onFirstNameChange(action.value)
-            is SignupAction.OnFirstNameValidate -> onFirstNameValidate()
-            is SignupAction.OnLastNameChange -> onLastNameChange(action.value)
-            is SignupAction.OnLastNameValidate -> onLastNameValidate()
-            is SignupAction.OnEmailChange -> onEmailChange(action.value)
-            is SignupAction.OnEmailValidate -> onEmailValidate()
-            is SignupAction.OnPasswordChange -> onPasswordChange(action.value)
-            is SignupAction.OnPasswordValidate -> onPasswordValidate()
-            is SignupAction.OnConfirmPasswordChange -> onConfirmPasswordChange(action.value)
-            is SignupAction.OnConfirmPasswordValidate -> onConfirmPasswordValidate()
-            is SignupAction.OnSignup -> onSignup(action.onSuccess)
-        }
-    }
+    private val eventsChannel = Channel<SignupEvents>()
+    val events = eventsChannel.receiveAsFlow()
 
-    private fun onFirstNameChange(value: String) {
+
+    override fun onFirstNameChange(value: String) {
         _state.update {
             it.copy(
                 firstName = value,
@@ -48,7 +38,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun onFirstNameValidate() {
+    override fun onFirstNameValidate() {
         UserDataValidator.validateName(_state.value.firstName)
             .onSuccess {
                 _state.update {
@@ -67,7 +57,7 @@ class SignupViewModel @Inject constructor(
     }
 
 
-    private fun onLastNameChange(value: String) {
+    override fun onLastNameChange(value: String) {
         _state.update {
             it.copy(
                 lastName = value,
@@ -76,7 +66,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun onLastNameValidate() {
+    override fun onLastNameValidate() {
         UserDataValidator.validateName(_state.value.lastName)
             .onSuccess {
                 _state.update {
@@ -94,7 +84,7 @@ class SignupViewModel @Inject constructor(
             }
     }
 
-    private fun onEmailChange(value: String) {
+    override fun onEmailChange(value: String) {
         _state.update {
             it.copy(
                 email = value,
@@ -103,7 +93,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun onEmailValidate() {
+    override fun onEmailValidate() {
         UserDataValidator.validateEmail(_state.value.email)
             .onSuccess {
                 _state.update {
@@ -121,7 +111,7 @@ class SignupViewModel @Inject constructor(
             }
     }
 
-    private fun onPasswordChange(value: String) {
+    override fun onPasswordChange(value: String) {
         _state.update {
             it.copy(
                 password = value,
@@ -130,7 +120,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun onPasswordValidate() {
+    override fun onPasswordValidate() {
         UserDataValidator.validatePassword(_state.value.password)
             .onSuccess {
                 _state.update {
@@ -148,7 +138,7 @@ class SignupViewModel @Inject constructor(
             }
     }
 
-    private fun onConfirmPasswordChange(value: String) {
+    override fun onConfirmPasswordChange(value: String) {
         _state.update {
             it.copy(
                 confirmPassword = value,
@@ -157,7 +147,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private fun onConfirmPasswordValidate() {
+    override fun onConfirmPasswordValidate() {
         UserDataValidator.validateConfirmPassword(
             password = _state.value.password,
             confirmPassword = _state.value.confirmPassword
@@ -186,7 +176,7 @@ class SignupViewModel @Inject constructor(
         onConfirmPasswordValidate()
     }
 
-    private fun onSignup(onSuccess: () -> Unit) {
+    override fun onSignup(onSuccess: () -> Unit) {
         onValidateSignupData()
         if (
             _state.value.firstNameValidation == null &&
@@ -198,7 +188,6 @@ class SignupViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     isLoading = true,
-                    error = null
                 )
             }
             viewModelScope.launch {
@@ -211,23 +200,16 @@ class SignupViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = null
                         )
                     }
-                    withContext(Dispatchers.Main){ onSuccess() }
+                    withContext(Dispatchers.Main) { onSuccess() }
                 }.onError { error ->
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = error.toUiText()
                         )
                     }
-                }
-                delay(500)
-                _state.update {
-                    it.copy(
-                        error = null
-                    )
+                    eventsChannel.send(SignupEvents.OnError(error.toUiText()))
                 }
             }
         }
